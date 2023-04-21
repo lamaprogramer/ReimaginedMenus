@@ -1,0 +1,10 @@
+accessWidener v1 named
+
+accessible class Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab
+accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab <init> ()V
+accessible class Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$WorldTab
+accessible class Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$MoreTab
+
+accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab <init> ()V
+accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$WorldTab <init> ()V
+accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$MoreTab <init> ()V
