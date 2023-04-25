@@ -34,10 +34,6 @@ import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class OptionsTabWidget extends AbstractParentElement implements Drawable, Element, Selectable {
-    private static final int field_42489 = -1;
-    private static final int field_43076 = 400;
-    private static final int field_43077 = 24;
-    private static final int field_43078 = 14;
     private static final Text USAGE_NARRATION_TEXT = Text.translatable("narration.tab_navigation.usage");
     private final GridWidget grid;
     private int tabNavWidth;
@@ -45,11 +41,17 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     private final ImmutableList<Tab> tabs;
     private final ImmutableList<TabButtonWidget> tabButtons;
 
-    OptionsTabWidget(int x, TabManager tabManager, Iterable<Tab> tabs) {
+    private final int posX;
+    private final int posY;
+
+    OptionsTabWidget(int x, TabManager tabManager, Iterable<Tab> tabs, int posX, int posY) {
         this.tabNavWidth = x;
+        this.posX = posX;
+        this.posY = posY;
         this.tabManager = tabManager;
         this.tabs = ImmutableList.copyOf(tabs);
         this.grid = new GridWidget(0, 0);
+        this.grid.setPosition(posX, posY);
         this.grid.getMainPositioner().alignHorizontalCenter();
         ImmutableList.Builder<TabButtonWidget> builder = ImmutableList.builder();
         int i = 0;
@@ -59,14 +61,16 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
             Tab tab = (Tab)var6.next();
             builder.add((TabButtonWidget)this.grid.add(new TabButtonWidget(tabManager, tab, 0, 24), 0, i++));
         }
-
         this.tabButtons = builder.build();
     }
 
-    public static net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder builder(TabManager tabManager, int width) {
-        return new net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder(tabManager, width);
+    public static net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder builder(TabManager tabManager, int width, int posX, int posY) {
+        return new net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder(tabManager, width, posX, posY);
     }
 
+    public void setGridPos(int x, int y) {
+        this.grid.setPosition(x, y);
+    }
     public void setWidth(int width) {
         this.tabNavWidth = width;
     }
@@ -131,15 +135,15 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     }
 
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        fill(matrices, 0, 0, this.tabNavWidth, 24, -16777216);
-        RenderSystem.setShaderTexture(0, CreateWorldScreen.HEADER_SEPARATOR_TEXTURE);
-        drawTexture(matrices, 0, this.grid.getY() + this.grid.getHeight() - 2, 0.0F, 0.0F, this.tabNavWidth, 2, 32, 2);
-        UnmodifiableIterator var5 = this.tabButtons.iterator();
-
-        while(var5.hasNext()) {
-            TabButtonWidget tabButtonWidget = (TabButtonWidget)var5.next();
-            tabButtonWidget.render(matrices, mouseX, mouseY, delta);
-        }
+        //fill(matrices, 0, 0, this.tabNavWidth, 24, -16777216);
+        //RenderSystem.setShaderTexture(0, CreateWorldScreen.HEADER_SEPARATOR_TEXTURE);
+        //drawTexture(matrices, this.posX, this.grid.getY() + this.grid.getHeight() - 2, 0.0F, 0.0F, this.tabNavWidth, 2, 32, 2);
+//        UnmodifiableIterator var5 = this.tabButtons.iterator();
+//
+//        while(var5.hasNext()) {
+//            TabButtonWidget tabButtonWidget = (TabButtonWidget)var5.next();
+//            tabButtonWidget.render(matrices, mouseX, mouseY, delta);
+//        }
 
     }
 
@@ -148,18 +152,18 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     }
 
     public void init() {
-        int i = Math.min(400, this.tabNavWidth) - 28;
-        int j = MathHelper.roundUpToMultiple(i / this.tabs.size(), 2);
-        UnmodifiableIterator var3 = this.tabButtons.iterator();
-
-        while(var3.hasNext()) {
-            TabButtonWidget tabButtonWidget = (TabButtonWidget)var3.next();
-            tabButtonWidget.setWidth(j);
-        }
-
-        this.grid.refreshPositions();
-        this.grid.setX(MathHelper.roundUpToMultiple((this.tabNavWidth - i) / 2, 2));
-        this.grid.setY(0);
+//        int i = Math.min(400, this.tabNavWidth) - 28;
+//        int j = MathHelper.roundUpToMultiple(i / this.tabs.size(), 2);
+//        UnmodifiableIterator var3 = this.tabButtons.iterator();
+//
+//        while(var3.hasNext()) {
+//            TabButtonWidget tabButtonWidget = (TabButtonWidget)var3.next();
+//            tabButtonWidget.setWidth(j);
+//        }
+//
+//        this.grid.refreshPositions();
+//        this.grid.setX(MathHelper.roundUpToMultiple((this.tabNavWidth - i) / 2, 2) + this.posX);
+//        this.grid.setY(0 + this.posY);
     }
 
     public void selectTab(int index, boolean clickSound) {
@@ -215,10 +219,14 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
         private final int width;
         private final TabManager tabManager;
         private final List<Tab> tabs = new ArrayList();
+        private final int posX;
+        private final int posY;
 
-        Builder(TabManager tabManager, int width) {
+        Builder(TabManager tabManager, int width, int x, int y) {
             this.tabManager = tabManager;
             this.width = width;
+            this.posX = x;
+            this.posY = y;
         }
 
         public net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder tabs(Tab... tabs) {
@@ -227,7 +235,7 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
         }
 
         public net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget build() {
-            return new net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget(this.width, this.tabManager, this.tabs);
+            return new net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget(this.width, this.tabManager, this.tabs, this.posX, this.posY);
         }
     }
 }

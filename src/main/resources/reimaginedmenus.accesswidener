@@ -1,10 +1,10 @@
 accessWidener v1 named
 
-accessible class Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab
-accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab <init> ()V
-accessible class Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$WorldTab
-accessible class Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$MoreTab
+accessible class net/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab
+accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab <init> (Lnet/minecraft/client/gui/screen/world/CreateWorldScreen;)V
 
-accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$GameTab <init> ()V
-accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$WorldTab <init> ()V
-accessible method Lnet/minecraft/client/gui/screen/world/CreateWorldScreen$MoreTab <init> ()V
+accessible class net/minecraft/client/gui/screen/world/WorldScreenOptionGrid
+accessible method net/minecraft/client/gui/screen/world/LevelScreenProvider getLevelScreenProvider ()V
+
+accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen openExperimentsScreen (Lnet/minecraft/resource/DataConfiguration;)V
+accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen openPackScreen (Lnet/minecraft/resource/DataConfiguration;)V
