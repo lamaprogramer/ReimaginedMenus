@@ -6,7 +6,9 @@
   "mixins": [
   ],
   "client": [
-    "CreateWorldScreenMixin"
+    "CreateWorldScreenMixin",
+    "GameRendererMixin",
+    "WorldListWidgetMixin"
   ],
   "injectors": {
     "defaultRequire": 1

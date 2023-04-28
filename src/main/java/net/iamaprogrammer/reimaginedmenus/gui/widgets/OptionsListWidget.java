@@ -4,7 +4,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.MultilineText;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -16,33 +15,27 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableTextContent;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
-import net.minecraft.world.gen.WorldPreset;
 import net.minecraft.world.gen.WorldPresets;
 
 import java.util.Objects;
 
 @Environment(EnvType.CLIENT)
-public class OptionsListWidget<E extends Screen> extends EntryListWidget<OptionsListWidget.OptionsPackEntry> {
+public class OptionsListWidget extends EntryListWidget<OptionsListWidget.OptionsPackEntry> {
     static final Identifier VERTICAL_SEPARATOR_TEXTURE = new Identifier("reimaginedmenus","textures/gui/vertical_separator.png");
     private static final Text SELECTION_USAGE_TEXT = Text.translatable("narration.selection.usage");
-    private Identifier DEFAULT_WORLD_IMAGE = new Identifier("reimaginedmenus", "textures/misc/default.png");
-
-    private final E screen;
-    private WorldCreator worldCreator;
-    private int selected;
+    private final Identifier DEFAULT_WORLD_IMAGE = new Identifier("reimaginedmenus", "textures/misc/default.png");
+    private final WorldCreator worldCreator;
     private final Text title;
     private final int size;
     private final int listWidth;
     private final int listHeight;
     //final OptionsScreen screen;
 
-    public OptionsListWidget(MinecraftClient client, E screen, WorldCreator worldCreator, int width, int height, int size, Text title) {
+    public OptionsListWidget(MinecraftClient client, WorldCreator worldCreator, int width, int height, int size, Text title) {
         super(client, width, height, height/2, height - 10, size+10);
-        this.screen = screen;
         this.worldCreator = worldCreator;
         this.title = title;
         this.size = size;
@@ -67,11 +60,14 @@ public class OptionsListWidget<E extends Screen> extends EntryListWidget<Options
                 RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/amplified.png"));
             } else if(worldCreator.getWorldType().preset().matchesId(WorldPresets.DEBUG_ALL_BLOCK_STATES.getValue())) {
                 RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/debug.png"));
+            } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.LARGE_BIOMES.getValue())) {
+                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
+            } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.SINGLE_BIOME_SURFACE.getValue())) {
+                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
             } else {
                 RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
             }
 
-            //RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/"+type+".png"));
             DrawableHelper.drawTexture(matrices, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
         } else {
             RenderSystem.setShaderTexture(0, this.DEFAULT_WORLD_IMAGE);
@@ -104,7 +100,7 @@ public class OptionsListWidget<E extends Screen> extends EntryListWidget<Options
         if (this.getSelectedOrNull() != null) {
             switch (keyCode) {
                 case 32, 257 -> {
-                    //((OptionsPackEntry) this.getSelectedOrNull()).toggle();
+
                     return true;
                 }
             }
@@ -113,15 +109,11 @@ public class OptionsListWidget<E extends Screen> extends EntryListWidget<Options
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    public int add(MinecraftClient client, OptionsListWidget widget, Text name, Identifier icon, OptionsPackEntry.PressAction action) {
+    public void add(MinecraftClient client, OptionsListWidget widget, Text name, Identifier icon, OptionsPackEntry.PressAction action) {
         OptionsListWidget.OptionsPackEntry entry = new OptionsPackEntry(client, widget, name, this.listWidth, icon, action);
         entry.setId(this.children().size());
         this.children().add(entry);
-//        if (super.getSelectedOrNull() == null) {
-//            super.setSelected(super.children().get(0));
-//            super.setFocused(super.children().get(0));
-//        }
-        return entry.getId();
+        //return entry.getId();
     }
 
     @Override
@@ -153,7 +145,7 @@ public class OptionsListWidget<E extends Screen> extends EntryListWidget<Options
         private final Identifier tabIcon;
         private int id = 0;
 
-        private int width;
+        private final int width;
 
         public OptionsPackEntry(MinecraftClient client, OptionsListWidget widget, Text name, int width, Identifier icon, PressAction action) {
             this.client = client;
@@ -166,10 +158,6 @@ public class OptionsListWidget<E extends Screen> extends EntryListWidget<Options
 
         public void setId(int i) {
             this.id = i;
-        }
-
-        public int getId() {
-            return this.id;
         }
 
         private static OrderedText trimTextToWidth(MinecraftClient client, Text text) {

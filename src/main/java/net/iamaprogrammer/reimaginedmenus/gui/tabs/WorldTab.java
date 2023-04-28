@@ -1,6 +1,6 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
-import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsListWidget;
+import net.iamaprogrammer.reimaginedmenus.gui.screen.WorldIconScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
@@ -14,9 +14,11 @@ import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.io.File;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
 public class WorldTab extends GridScreenTab {
@@ -29,6 +31,7 @@ public class WorldTab extends GridScreenTab {
     private static final Text SEED_INFO_TEXT = Text.translatable("selectWorld.seedInfo").formatted(Formatting.DARK_GRAY);
     private final TextFieldWidget seedField;
     private final ButtonWidget customizeButton;
+    private final ButtonWidget worldIconsButton;
 
     private final MinecraftClient client;
     private final WorldCreator worldCreator;
@@ -110,6 +113,11 @@ public class WorldTab extends GridScreenTab {
         worldCreator.addListener((creator) -> {
             worldScreenOptionGrid.refresh();
         });
+        this.worldIconsButton = (ButtonWidget)adder.add(ButtonWidget.builder(Text.translatable("world.create.icon.title"), (button) -> {
+            Path p = Path.of(new File(this.client.runDirectory, "worldicons/").toURI());
+            this.client.setScreen(new WorldIconScreen(this.client, this.target, p, Text.translatable("world.create.icon.title")));
+        }).size(this.buttonWidth, 20).build(), 2, positioner);
+
     }
 
     private void openCustomizeScreen() {

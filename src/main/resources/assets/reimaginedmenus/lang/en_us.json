@@ -1,0 +1,11 @@
+{
+  "world.create.settings": "Settings",
+  "world.create.tab.general": "General",
+  "world.create.tab.world": "World",
+  "world.create.tab.advanced": "Advanced",
+  "world.create.icon.filetoolarge": "%s KB Too Large!! Please select a file under 50 KB.",
+  "world.create.icon.title": "World Icons",
+  "world.create.icon.folderinfo": "(Place icon files here)",
+  "world.create.icon.dropinfo": "Drag and drop files into this window to add icons",
+  "world.create.icon.openfolder": "Open Icon Folder"
+}
