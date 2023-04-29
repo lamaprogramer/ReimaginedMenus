@@ -8,6 +8,7 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
+import net.minecraft.client.gui.screen.pack.PackListWidget;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
@@ -97,15 +98,6 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (this.getSelectedOrNull() != null) {
-            switch (keyCode) {
-                case 32, 257 -> {
-
-                    return true;
-                }
-            }
-        }
-
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
@@ -187,6 +179,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
             int textPosX = (entryWidth - this.client.textRenderer.getWidth(orderedText))/2;
             this.client.textRenderer.drawWithShadow(matrices, orderedText, (float)(x + textPosX), (float)(y + ((entryHeight-7)/2)), 16777215);
         }
+
 
         @Environment(EnvType.CLIENT)
         public interface PressAction {

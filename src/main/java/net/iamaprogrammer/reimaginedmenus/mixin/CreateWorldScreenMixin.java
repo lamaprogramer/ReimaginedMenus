@@ -11,6 +11,7 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.ScreenRect;
 import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.navigation.NavigationDirection;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
@@ -48,6 +49,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	private final CreateWorldScreen target =  ((CreateWorldScreen)(Object)this);
 	private OptionsTabWidget navigator;
 	private int currentTab = 0;
+	private Element prevBtn;
 	@Nullable
 	private GridWidget grid;
 
@@ -158,7 +160,40 @@ public abstract class CreateWorldScreenMixin extends Screen {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		if (this.navigator.trySwitchTabsWithKey(keyCode)) {
+//		if (this.navigator.trySwitchTabsWithKey(keyCode)) {
+//			return true;
+//		}
+		this.prevBtn = this.getFocused();
+		if (Screen.hasShiftDown()) {
+			switch (keyCode) {
+				case 265: {
+					if (this.currentTab != 0) {
+						this.currentTab--;
+						this.navigator.selectTab(this.currentTab, true);
+						this.tabMenu.selectTab(this.currentTab);
+						this.tabMenu.setFocused(this.tabMenu.children().get(this.currentTab));
+					}
+					return true;
+				}
+				case 264: {
+					if (this.tabMenu.children().size() > this.currentTab + 1) {
+						this.currentTab++;
+						this.navigator.selectTab(this.currentTab, true);
+						this.tabMenu.selectTab(this.currentTab);
+						this.tabMenu.setFocused(this.tabMenu.children().get(this.currentTab));
+					}
+					return true;
+				}
+			}
+		}
+		if (keyCode == 263 || keyCode == 262) {
+			super.keyPressed(keyCode, scanCode, modifiers);
+			if (this.getFocused() instanceof OptionsTabWidget) {
+				this.setFocused(this.prevBtn);
+			}
+			this.navigator.selectTab(this.currentTab, false);
+			this.tabMenu.selectTab(this.currentTab);
+			this.tabMenu.setFocused(this.tabMenu.children().get(this.currentTab));
 			return true;
 		}
 		if (super.keyPressed(keyCode, scanCode, modifiers)) {

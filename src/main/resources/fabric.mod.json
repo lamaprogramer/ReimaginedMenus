@@ -10,16 +10,17 @@
     "Iamaprogrammer"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://github.com/lamaprogramer/ReimaginedMenus",
+    "sources": "https://github.com/lamaprogramer/ReimaginedMenus"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/reimaginedmenus/icon.png",
 
   "environment": "*",
   "entrypoints": {
-    "main": [
+    "main": [],
+    "client": [
       "net.iamaprogrammer.reimaginedmenus.ReimaginedMenus"
     ]
   },

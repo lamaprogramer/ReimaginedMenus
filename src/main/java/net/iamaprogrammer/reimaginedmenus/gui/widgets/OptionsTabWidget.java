@@ -124,32 +124,6 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
         }
     }
 
-    public boolean trySwitchTabsWithKey(int keyCode) {
-        if (Screen.hasControlDown()) {
-            int i = this.getTabForKey(keyCode);
-            if (i != -1) {
-                this.selectTab(MathHelper.clamp(i, 0, this.tabs.size() - 1), true);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private int getTabForKey(int keyCode) {
-        if (keyCode >= 49 && keyCode <= 57) {
-            return keyCode - 49;
-        } else {
-            if (keyCode == 258) {
-                int i = this.getCurrentTabIndex();
-                if (i != -1) {
-                    int j = Screen.hasShiftDown() ? i - 1 : i + 1;
-                    return Math.floorMod(j, this.tabs.size());
-                }
-            }
-            return -1;
-        }
-    }
-
     private int getCurrentTabIndex() {
         Tab tab = this.tabManager.getCurrentTab();
         int i = this.tabs.indexOf(tab);
