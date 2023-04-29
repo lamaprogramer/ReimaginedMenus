@@ -8,5 +8,3 @@ accessible method net/minecraft/client/gui/screen/world/LevelScreenProvider getL
 
 accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen openExperimentsScreen (Lnet/minecraft/resource/DataConfiguration;)V
 accessible method net/minecraft/client/gui/screen/world/CreateWorldScreen openPackScreen (Lnet/minecraft/resource/DataConfiguration;)V
-
-accessible method net/minecraft/client/main/Main getOption (Ljoptsimple/OptionSet;Ljoptsimple/OptionSpec;)Ljava/lang/Object;
