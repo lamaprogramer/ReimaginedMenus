@@ -1,9 +1,9 @@
 package net.iamaprogrammer.reimaginedmenus.mixin;
 
 import net.iamaprogrammer.reimaginedmenus.gui.screen.WorldIconScreen;
-import net.iamaprogrammer.reimaginedmenus.gui.tabs.WorldTab;
-import net.iamaprogrammer.reimaginedmenus.gui.tabs.GeneralTab;
 import net.iamaprogrammer.reimaginedmenus.gui.tabs.AdvancedTab;
+import net.iamaprogrammer.reimaginedmenus.gui.tabs.GeneralTab;
+import net.iamaprogrammer.reimaginedmenus.gui.tabs.WorldTab;
 import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsListWidget;
 import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget;
 import net.minecraft.client.MinecraftClient;
@@ -11,12 +11,14 @@ import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.ScreenRect;
 import net.minecraft.client.gui.Selectable;
-import net.minecraft.client.gui.navigation.NavigationDirection;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.tab.TabManager;
-import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.gui.widget.ButtonWidget;
+import net.minecraft.client.gui.widget.GridWidget;
+import net.minecraft.client.gui.widget.Positioner;
+import net.minecraft.client.gui.widget.SimplePositioningWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -26,9 +28,6 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
-
-import java.io.File;
-import java.nio.file.Path;
 
 @Mixin(CreateWorldScreen.class)
 public abstract class CreateWorldScreenMixin extends Screen {

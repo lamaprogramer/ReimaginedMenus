@@ -1,8 +1,6 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.iamaprogrammer.reimaginedmenus.gui.screen.WorldIconScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.MultilineText;
@@ -27,7 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
-@Environment(value= EnvType.CLIENT)
+
 public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamaprogrammer.reimaginedmenus.gui.widgets.WorldIconListWidget.WorldIconEntry> {
     static final Identifier RESOURCE_PACKS_TEXTURE = new Identifier("textures/gui/resource_packs.png");
     private final Text title;
@@ -70,7 +68,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    @Environment(value=EnvType.CLIENT)
+
     public static class WorldIconEntry extends AlwaysSelectedEntryListWidget.Entry<net.iamaprogrammer.reimaginedmenus.gui.widgets.WorldIconListWidget.WorldIconEntry> {
         private final Path worldIconsFolder;
         private static final String ELLIPSIS = "...";

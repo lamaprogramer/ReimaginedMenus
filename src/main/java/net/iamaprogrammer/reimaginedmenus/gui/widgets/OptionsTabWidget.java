@@ -1,12 +1,9 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
 import com.google.common.collect.ImmutableList;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.navigation.GuiNavigation;
 import net.minecraft.client.gui.navigation.GuiNavigationPath;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.tab.Tab;
@@ -16,12 +13,10 @@ import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.client.gui.widget.TabButtonWidget;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
-import net.minecraft.util.math.MathHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-@Environment(EnvType.CLIENT)
 public class OptionsTabWidget extends AbstractParentElement implements Drawable, Element, Selectable {
     private static final Text USAGE_NARRATION_TEXT = Text.translatable("narration.tab_navigation.usage");
     private final GridWidget grid;
@@ -135,7 +130,7 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
         return i != -1 ? (TabButtonWidget)this.tabButtons.get(i) : null;
     }
 
-    @Environment(EnvType.CLIENT)
+
     public static class Builder {
         private final TabManager tabManager;
         private final List<Tab> tabs = new ArrayList<>();

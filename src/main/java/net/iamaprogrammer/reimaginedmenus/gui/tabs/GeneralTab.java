@@ -1,22 +1,16 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.screen.pack.PackScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.tab.GridScreenTab;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.*;
-import net.minecraft.client.main.Main;
-import net.minecraft.resource.DataConfiguration;
-import net.minecraft.resource.ResourcePackManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.Difficulty;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class GeneralTab extends GridScreenTab {
     private static final Text GAME_TAB_TITLE_TEXT = Text.translatable("createWorld.tab.game.title");

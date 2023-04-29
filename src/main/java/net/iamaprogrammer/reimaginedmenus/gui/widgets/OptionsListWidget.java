@@ -1,14 +1,11 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.gui.screen.pack.PackListWidget;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
@@ -23,7 +20,6 @@ import net.minecraft.world.gen.WorldPresets;
 
 import java.util.Objects;
 
-@Environment(EnvType.CLIENT)
 public class OptionsListWidget extends EntryListWidget<OptionsListWidget.OptionsPackEntry> {
     static final Identifier VERTICAL_SEPARATOR_TEXTURE = new Identifier("reimaginedmenus","textures/gui/vertical_separator.png");
     private static final Text SELECTION_USAGE_TEXT = Text.translatable("narration.selection.usage");
@@ -62,9 +58,9 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
             } else if(worldCreator.getWorldType().preset().matchesId(WorldPresets.DEBUG_ALL_BLOCK_STATES.getValue())) {
                 RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/debug.png"));
             } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.LARGE_BIOMES.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
+                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/large.png"));
             } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.SINGLE_BIOME_SURFACE.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
+                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/single.png"));
             } else {
                 RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
             }
@@ -127,7 +123,6 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         }
     }
 
-    @Environment(EnvType.CLIENT)
     public static class OptionsPackEntry extends AlwaysSelectedEntryListWidget.Entry<net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsListWidget.OptionsPackEntry> {
         private final net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsListWidget widget;
 
@@ -181,7 +176,6 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         }
 
 
-        @Environment(EnvType.CLIENT)
         public interface PressAction {
             void onPress();
         }
