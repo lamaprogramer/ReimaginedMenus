@@ -1,0 +1,11 @@
+{
+  "world.create.settings": "設定",
+  "world.create.tab.general": "一般",
+  "world.create.tab.world": "ワールド",
+  "world.create.tab.advanced": "詳細",
+  "world.create.icon.filetoolarge": "%s KB は大きなサイズです！ 50 KB以下のファイルを選んでください。",
+  "world.create.icon.title": "ウァルドのアイコン",
+  "world.create.icon.folderinfo": "(ここにアイコンのファイルを置いてください。)",
+  "world.create.icon.dropinfo": "このウィンドウにファイルをドラッグ＆ドロップすると、アイコンが追加されます。",
+  "world.create.icon.openfolder": "アイコンフォルダを開く"
+}
