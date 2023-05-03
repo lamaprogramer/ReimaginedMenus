@@ -1,0 +1,14 @@
+{
+  "world.create.settings": "Настройки",
+  "world.create.tab.general": "Игра",
+  "world.create.tab.world": "Мир",
+  "world.create.tab.advanced": "Прочее",
+  "world.create.icon.filetoolarge": "Текущий размер: %s КБ. Размер превышает 50 КБ.",
+  "world.create.icon.title": "Иконки",
+  "world.create.icon.folderinfo": "(Поместите сюда файлы иконок)",
+  "world.create.icon.dropinfo": "Перетащите файлы в это окно, чтобы добавить иконки",
+  "world.create.icon.openfolder": "Папка с иконками",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "Полный редизайн меню создания мира.",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus переосмысливает дизайн некоторых меню в стиле Bedrock, при этом сохраняя внешний вид Java!"
+}
