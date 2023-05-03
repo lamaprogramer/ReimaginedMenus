@@ -197,7 +197,7 @@ public class WorldIconScreen extends Screen {
                 this.refresh();
             }
             this.client.setScreen(this);
-        }, Text.translatable("pack.dropConfirm"), Text.literal(string)));
+        }, Text.translatable("world.create.icon.dropConfirm"), Text.literal(string)));
     }
 
     @Environment(value=EnvType.CLIENT)
