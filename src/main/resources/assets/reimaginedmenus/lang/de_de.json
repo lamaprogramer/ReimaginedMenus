@@ -1,0 +1,11 @@
+{
+  "world.create.settings": "Einstellungen",
+  "world.create.tab.general": "Allgemein",
+  "world.create.tab.world": "Welt",
+  "world.create.tab.advanced": "Fortgeschritten",
+  "world.create.icon.filetoolarge": "%s KB zu groß! Bitte wähle eine Datei unter 50 KB.",
+  "world.create.icon.title": "Welt Symbole",
+  "world.create.icon.folderinfo": "(Platziere Symbol Dateien hierhin)",
+  "world.create.icon.dropinfo": "Um Symbole hinzuzufügen, ziehe sie in dieses Fenster",
+  "world.create.icon.openfolder": "Öffne Symbol Ordner"
+}

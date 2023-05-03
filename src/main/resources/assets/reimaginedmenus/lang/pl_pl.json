@@ -1,0 +1,11 @@
+{
+  "world.create.settings": "Ustawienia",
+  "world.create.tab.general": "Ogólne",
+  "world.create.tab.world": "Świat",
+  "world.create.tab.advanced": "Zaawansowane",
+  "world.create.icon.filetoolarge": "%s KB Za duże!! Proszę wybierz plik poniżej 50 KB.",
+  "world.create.icon.title": "Ikonka świata",
+  "world.create.icon.folderinfo": "(Wstaw ikonkę świata tutaj)",
+  "world.create.icon.dropinfo": "Pociągnij i puść pliki do tego okna aby dodać ikonkę.",
+  "world.create.icon.openfolder": "Otwórz folder ikonek"
+}
