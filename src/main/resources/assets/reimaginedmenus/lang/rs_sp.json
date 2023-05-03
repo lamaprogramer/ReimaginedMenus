@@ -1,0 +1,11 @@
+{
+  "world.create.settings": "Подешавања",
+  "world.create.tab.general": "Генерално",
+  "world.create.tab.world": "Свет",
+  "world.create.tab.advanced": "Напредно",
+  "world.create.icon.filetoolarge": "%s KB !! Молимо вас да одаберете датотеку испод 50 KB.",
+  "world.create.icon.title": "иконице света",
+  "world.create.icon.folderinfo": "(Ставите датотеке иконица овде)",
+  "world.create.icon.dropinfo": "повуците датотеку да би додали иконицу",
+  "world.create.icon.openfolder": "отвори фаскциклу иконица"
+}
