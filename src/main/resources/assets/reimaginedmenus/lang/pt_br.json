@@ -1,0 +1,15 @@
+{
+  "world.create.settings": "Configurações",
+  "world.create.tab.general": "Geral",
+  "world.create.tab.world": "Mundo",
+  "world.create.tab.advanced": "Avançado",
+  "world.create.icon.filetoolarge": "%s KB é Muito Grande!! Por favor selecione um arquivo menor que 50 KB.",
+  "world.create.icon.title": "Ícones do Mundo",
+  "world.create.icon.folderinfo": "(Coloque um icone aqui)",
+  "world.create.icon.dropinfo": "Segure e solte arquivos nessa janela para adicionar ícones",
+  "world.create.icon.openfolder": "Abrir Pasta dos Ícones",
+  "world.create.icon.dropConfirm": "Você quer adicionar os seguintes ícones para o minecraft?",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "Completamente Refeito o Menu de Criações de Mundo .",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus refaz o design de algumas partes do menu de criação de mundo com o estilo dos menus do Bedrock enquanto matem a aparencia do Java!",
+}
