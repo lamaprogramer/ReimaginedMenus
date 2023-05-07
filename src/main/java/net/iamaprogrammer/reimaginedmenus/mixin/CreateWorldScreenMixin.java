@@ -19,6 +19,7 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.client.gui.widget.Positioner;
 import net.minecraft.client.gui.widget.SimplePositioningWidget;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -28,6 +29,9 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CreateWorldScreen.class)
 public abstract class CreateWorldScreenMixin extends Screen {
@@ -44,9 +48,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	private final Identifier GENERAL_SETTINGS_ICON = new Identifier("minecraft", "textures/block/crafting_table_top.png");
 	private final Identifier ADVANCED_SETTINGS_ICON = new Identifier("minecraft", "textures/block/furnace_front.png");
 	private final Identifier CHEATS_SETTINGS_ICON = new Identifier("minecraft", "textures/block/enchanting_table_top.png");
-	private OptionsListWidget tabMenu;
 	private final CreateWorldScreen target =  ((CreateWorldScreen)(Object)this);
 	private OptionsTabWidget navigator;
+	private OptionsListWidget tabMenu;
 	private int currentTab = 0;
 	private Element prevBtn;
 	@Nullable
@@ -91,14 +95,12 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		this.tabMenu = new OptionsListWidget(this.client, this.worldCreator, this.tabMenuWidth, this.height, 20, Text.translatable("world.create.settings"));
 		this.addDrawableChild(this.tabMenu);
 
-		GeneralTab generalTab = new GeneralTab(this.client, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
+		GeneralTab generalTab = new GeneralTab(this.client, this.worldCreator, this.target, this.textRenderer, this.navigatorWidth, 0);
 		WorldTab worldTab = new WorldTab(this.client, target, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
 		AdvancedTab advancedTab = new AdvancedTab(this.client, target, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
 
 		this.navigator = OptionsTabWidget.builder(this.tabManager, this.tabMenuWidth, 0).tabs(generalTab, worldTab, advancedTab).build();
 		this.addDrawableChild(this.navigator);
-
-
 
 
 		this.tabMenu.add(this.client, this.tabMenu, Text.translatable("world.create.tab.general"), this.GENERAL_SETTINGS_ICON, () -> {
@@ -134,6 +136,11 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		this.navigator.selectTab(currentTab, false);
 		this.worldCreator.update();
 		initTabNavigation();
+	}
+
+
+	@Inject(method = "render", at = @At("HEAD"))
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 	}
 
 	@Override

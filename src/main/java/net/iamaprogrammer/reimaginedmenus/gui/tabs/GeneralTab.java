@@ -1,7 +1,9 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
+
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.tab.GridScreenTab;
 import net.minecraft.client.gui.tooltip.Tooltip;
@@ -11,6 +13,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.world.Difficulty;
 
 import java.io.File;
+
 
 public class GeneralTab extends GridScreenTab {
     private static final Text GAME_TAB_TITLE_TEXT = Text.translatable("createWorld.tab.game.title");
@@ -23,7 +26,7 @@ public class GeneralTab extends GridScreenTab {
     private final int posX;
     private final int posY;
 
-    public GeneralTab(MinecraftClient client, WorldCreator worldCreator, TextRenderer renderer, int posX, int posY) {
+    public GeneralTab(MinecraftClient client, WorldCreator worldCreator, CreateWorldScreen target, TextRenderer renderer, int posX, int posY) {
         super(GAME_TAB_TITLE_TEXT);
         this.posX = posX;
         this.posY = posY;
@@ -45,6 +48,8 @@ public class GeneralTab extends GridScreenTab {
 
         CyclingButtonWidget<WorldCreator.Mode> cyclingButtonWidget = (CyclingButtonWidget)adder.add(CyclingButtonWidget.builder(value -> ((WorldCreator.Mode)value).name).values((WorldCreator.Mode[])new WorldCreator.Mode[]{WorldCreator.Mode.SURVIVAL, WorldCreator.Mode.HARDCORE, WorldCreator.Mode.CREATIVE}).build(0, 0, 210, 20, GAME_MODE_TEXT, (button, value) -> worldCreator.setGameMode((WorldCreator.Mode)((Object)value))), positioner);
         cyclingButtonWidget.setValue(WorldCreator.Mode.SURVIVAL);
+
+
         worldCreator.addListener(creator -> {
             cyclingButtonWidget.setValue(creator.getGameMode());
             cyclingButtonWidget.active = !creator.isDebug();
