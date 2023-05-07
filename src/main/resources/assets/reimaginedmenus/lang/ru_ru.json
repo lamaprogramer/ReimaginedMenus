@@ -8,6 +8,7 @@
   "world.create.icon.folderinfo": "(Поместите сюда файлы иконок)",
   "world.create.icon.dropinfo": "Перетащите файлы в это окно, чтобы добавить иконки",
   "world.create.icon.openfolder": "Папка с иконками",
+  "world.create.icon.dropConfirm": "Добавить следующие иконки в Minecraft?",
 
   "modmenu.summaryTranslation.reimaginedmenus": "Полный редизайн меню создания мира.",
   "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus переосмысливает дизайн некоторых меню в стиле Bedrock, при этом сохраняя внешний вид Java!"
