@@ -8,7 +8,7 @@ Features: Complete Create World menu overhaul.
     
     * Increased resolution for world icons.
     
-    * Translations for Italian, Spanish, Japanese, Portuguese, German and Serbian.
+    * Translations for Italian, Spanish, Japanese, Portuguese, Polish, Russian, German and Serbian.
 
 I'm entirely open to design changes and will consider adding your suggestion. I'm also open to adding and/or editing translations for your language, you will have two options:
 
