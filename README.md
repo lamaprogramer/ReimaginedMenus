@@ -17,6 +17,7 @@ I'm entirely open to design changes and will consider adding your suggestion. I'
     * Or have me use Google Translate (Which is prone to inaccuracy, but can be quicker)
 
 Want to download the mod?
+
 [Modrinth](https://modrinth.com/mod/reimagined-world-menu)
 
 [Curseforge](https://www.curseforge.com/minecraft/mc-mods/reimagined-world-menu)
