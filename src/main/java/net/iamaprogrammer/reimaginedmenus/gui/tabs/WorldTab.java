@@ -87,7 +87,6 @@ public class WorldTab extends GridScreenTab {
         this.seedField.setChangedListener((seed) -> {
             worldCreator.setSeed(this.seedField.getText());
         });
-//        adder.add(adder2.getGridWidget(), 2);
         WorldScreenOptionGrid.Builder builder = WorldScreenOptionGrid.builder(this.buttonWidth).marginLeft(1);
         Text var10001 = MAP_FEATURES_TEXT;
         WorldCreator var10002 = worldCreator;
@@ -148,10 +147,5 @@ public class WorldTab extends GridScreenTab {
         }
         return worldTypeButton.getGenericNarrationMessage();
     }
-
-//    @Override
-//    public void tick() {
-//        this.seedField.tick();
-//    }
 }
 

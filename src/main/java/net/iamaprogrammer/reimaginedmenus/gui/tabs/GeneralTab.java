@@ -26,12 +26,10 @@ public class GeneralTab extends GridScreenTab {
     private final int posX;
     private final int posY;
 
-    public GeneralTab(MinecraftClient client, WorldCreator worldCreator, CreateWorldScreen target, TextRenderer renderer, int posX, int posY) {
+    public GeneralTab(MinecraftClient client, WorldCreator worldCreator, TextRenderer renderer, int posX, int posY) {
         super(GAME_TAB_TITLE_TEXT);
         this.posX = posX;
         this.posY = posY;
-
-        File file3 = new File(client.runDirectory, "worldicons/");
 
         GridWidget.Adder adder = this.grid.setRowSpacing(8).createAdder(1);
         Positioner positioner = adder.copyPositioner().marginLeft(this.posX).marginTop(this.posY);
@@ -43,7 +41,6 @@ public class GeneralTab extends GridScreenTab {
         this.worldNameField.setText(worldCreator.getWorldName());
         this.worldNameField.setChangedListener(worldCreator::setWorldName);
         worldCreator.addListener(creator -> this.worldNameField.setTooltip(Tooltip.of(Text.translatable("selectWorld.targetFolder", Text.literal(creator.getWorldDirectoryName()).formatted(Formatting.ITALIC)))));
-        //CreateWorldScreen.super.setInitialFocus(this.worldNameField);
         adder.add(adder2.getGridWidget(), adder.copyPositioner().alignHorizontalCenter());
 
         CyclingButtonWidget<WorldCreator.Mode> cyclingButtonWidget = (CyclingButtonWidget)adder.add(CyclingButtonWidget.builder(value -> ((WorldCreator.Mode)value).name).values((WorldCreator.Mode[])new WorldCreator.Mode[]{WorldCreator.Mode.SURVIVAL, WorldCreator.Mode.HARDCORE, WorldCreator.Mode.CREATIVE}).build(0, 0, 210, 20, GAME_MODE_TEXT, (button, value) -> worldCreator.setGameMode((WorldCreator.Mode)((Object)value))), positioner);

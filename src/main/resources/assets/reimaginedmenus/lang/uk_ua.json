@@ -1,0 +1,15 @@
+{
+  "world.create.settings": "Налаштування",
+  "world.create.tab.general": "Гра",
+  "world.create.tab.world": "Світ",
+  "world.create.tab.advanced": "Інше",
+  "world.create.icon.filetoolarge": "Поточний розмір: %s КБ. Розмір перевищує 50 КБ.",
+  "world.create.icon.title": "Іконки",
+  "world.create.icon.folderinfo": "(Помістіть файли іконок сюди)",
+  "world.create.icon.dropinfo": "Перетягніть файли у вікно, щоб додати іконки",
+  "world.create.icon.openfolder": "Папка з іконками",
+  "world.create.icon.dropConfirm": "Додати наступні іконки в Minecraft?",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "Повний меню меню створення світу.",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus переосмислює дизайн деяких меню у стилі Bedrock,  при цьому зберігаючи зовнішній вигляд Java!"
+}

@@ -95,9 +95,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		this.tabMenu = new OptionsListWidget(this.client, this.worldCreator, this.tabMenuWidth, this.height, 20, Text.translatable("world.create.settings"));
 		this.addDrawableChild(this.tabMenu);
 
-		GeneralTab generalTab = new GeneralTab(this.client, this.worldCreator, this.target, this.textRenderer, this.navigatorWidth, 0);
+		GeneralTab generalTab = new GeneralTab(this.client, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
 		WorldTab worldTab = new WorldTab(this.client, target, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
-		AdvancedTab advancedTab = new AdvancedTab(this.client, target, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
+		AdvancedTab advancedTab = new AdvancedTab(this.client, target, this.worldCreator, this.navigatorWidth, 0);
 
 		this.navigator = OptionsTabWidget.builder(this.tabManager, this.tabMenuWidth, 0).tabs(generalTab, worldTab, advancedTab).build();
 		this.addDrawableChild(this.navigator);
@@ -166,9 +166,6 @@ public abstract class CreateWorldScreenMixin extends Screen {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-//		if (this.navigator.trySwitchTabsWithKey(keyCode)) {
-//			return true;
-//		}
 		this.prevBtn = this.getFocused();
 		if (Screen.hasShiftDown()) {
 			switch (keyCode) {

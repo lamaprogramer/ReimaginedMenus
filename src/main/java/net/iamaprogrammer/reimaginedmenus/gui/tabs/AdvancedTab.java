@@ -26,7 +26,7 @@ public class AdvancedTab extends GridScreenTab {
     private final int posX;
     private final int posY;
 
-    public AdvancedTab(MinecraftClient client, CreateWorldScreen target, WorldCreator worldCreator, TextRenderer renderer, int posX, int posY) {
+    public AdvancedTab(MinecraftClient client, CreateWorldScreen target, WorldCreator worldCreator, int posX, int posY) {
         super(MORE_TAB_TITLE_TEXT);
         this.client = client;
         this.worldCreator = worldCreator;
