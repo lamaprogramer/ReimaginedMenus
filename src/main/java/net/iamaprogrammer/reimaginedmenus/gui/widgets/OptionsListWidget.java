@@ -1,15 +1,12 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
@@ -43,35 +40,34 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         this.setRenderHeader(true, (int)(9.0F * 1.5F));
     }
 
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
 
         int texturePositionX = (this.listWidth - 128)/2;
         int texturePositionY = ((this.listHeight / 2)- 72)/2;
         // small dimensions: 192, 108
 
         if (this.worldCreator != null) {
+            Identifier texture = null;
             if(worldCreator.getWorldType().preset().matchesId(WorldPresets.FLAT.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/superflat.png"));
+                texture = new Identifier("reimaginedmenus", "textures/misc/superflat.png");
             } else if(worldCreator.getWorldType().preset().matchesId(WorldPresets.AMPLIFIED.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/amplified.png"));
+                texture = new Identifier("reimaginedmenus", "textures/misc/amplified.png");
             } else if(worldCreator.getWorldType().preset().matchesId(WorldPresets.DEBUG_ALL_BLOCK_STATES.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/debug.png"));
+                texture = new Identifier("reimaginedmenus", "textures/misc/debug.png");
             } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.LARGE_BIOMES.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/large.png"));
+                texture = new Identifier("reimaginedmenus", "textures/misc/large.png");
             } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.SINGLE_BIOME_SURFACE.getValue())) {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/single.png"));
+                texture = new Identifier("reimaginedmenus", "textures/misc/single.png");
             } else {
-                RenderSystem.setShaderTexture(0, new Identifier("reimaginedmenus", "textures/misc/default.png"));
+                texture = new Identifier("reimaginedmenus", "textures/misc/default.png");
             }
 
-            DrawableHelper.drawTexture(matrices, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
+            context.drawTexture(texture, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
         } else {
-            RenderSystem.setShaderTexture(0, this.DEFAULT_WORLD_IMAGE);
-            DrawableHelper.drawTexture(matrices, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
+            context.drawTexture(this.DEFAULT_WORLD_IMAGE, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
         }
-        RenderSystem.setShaderTexture(0, VERTICAL_SEPARATOR_TEXTURE);
-        DrawableHelper.drawTexture(matrices, this.listWidth, 0, 0.0F, 0.0F, 2, this.listHeight, 2, 32);
+        context.drawTexture(VERTICAL_SEPARATOR_TEXTURE, this.listWidth, 0, 0.0F, 0.0F, 2, this.listHeight, 2, 32);
 
     }
 
@@ -80,9 +76,9 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         super.setFocused(super.children().get(id));
     }
 
-    protected void renderHeader(MatrixStack matrices, int x, int y) {
+    protected void renderHeader(DrawContext context, int x, int y) {
         Text text = Text.empty().append(this.title).formatted(new Formatting[]{Formatting.UNDERLINE, Formatting.BOLD});
-        this.client.textRenderer.draw(matrices, text, (float)(x + this.width / 2 - this.client.textRenderer.getWidth(text) / 2), (float)Math.min(this.top + 3, y), 16777215);
+        context.drawText(this.client.textRenderer, text, (x + this.width / 2 - this.client.textRenderer.getWidth(text) / 2), Math.min(this.top + 3, y), 16777215, true);
     }
 
     public int getRowWidth() {
@@ -162,17 +158,16 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
             return Text.translatable("narrator.select", new Object[]{this.optionName});
         }
 
-        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            RenderSystem.setShaderTexture(0, this.tabIcon);
-            DrawableHelper.drawTexture(matrices, x+((entryHeight-widget.size)/2), y +((entryHeight-widget.size)/2), 0.0F, 0.0F, widget.size, widget.size, widget.size, widget.size);
+        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            context.drawTexture(this.tabIcon, x+((entryHeight-widget.size)/2), y +((entryHeight-widget.size)/2), 0.0F, 0.0F, widget.size, widget.size, widget.size, widget.size);
             OrderedText orderedText = this.optionName;
 
             if (((Boolean)this.client.options.getTouchscreen().getValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
-                DrawableHelper.fill(matrices, x+((entryHeight-widget.size)/2), y+((entryHeight-widget.size)/2), x + widget.size +((entryHeight-widget.size)/2), y + widget.size +((entryHeight-widget.size)/2), -1601138544);
+                context.fill(x+((entryHeight-widget.size)/2), y+((entryHeight-widget.size)/2), x + widget.size +((entryHeight-widget.size)/2), y + widget.size +((entryHeight-widget.size)/2), -1601138544);
 
             }
             int textPosX = (entryWidth - this.client.textRenderer.getWidth(orderedText))/2;
-            this.client.textRenderer.drawWithShadow(matrices, orderedText, (float)(x + textPosX), (float)(y + ((entryHeight-7)/2)), 16777215);
+            context.drawText(this.client.textRenderer, orderedText, (x + textPosX), (y + ((entryHeight-7)/2)), 16777215, true);
         }
 
 

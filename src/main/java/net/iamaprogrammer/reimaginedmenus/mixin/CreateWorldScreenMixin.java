@@ -7,10 +7,7 @@ import net.iamaprogrammer.reimaginedmenus.gui.tabs.WorldTab;
 import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsListWidget;
 import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Drawable;
-import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.ScreenRect;
-import net.minecraft.client.gui.Selectable;
+import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
@@ -23,11 +20,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -53,7 +48,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	private OptionsListWidget tabMenu;
 	private int currentTab = 0;
 	private Element prevBtn;
-	@Nullable
+
 	private GridWidget grid;
 
 	private int tabMenuWidth;
@@ -79,8 +74,8 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	 * @reason To completely re-style the menu.
 	 */
 
-	@Overwrite
-	public void init() {
+	@Inject(method = "init", at = @At("HEAD"), cancellable = true)
+	protected void newInit(CallbackInfo ci) {
 		this.tabMenuWidth = this.width/3;
 		this.navigatorWidth = (int)(this.width/1.5);
 
@@ -136,11 +131,12 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		this.navigator.selectTab(currentTab, false);
 		this.worldCreator.update();
 		initTabNavigation();
+
+		ci.cancel();
 	}
 
-
 	@Inject(method = "render", at = @At("HEAD"))
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+	public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 	}
 
 	@Override
@@ -166,9 +162,6 @@ public abstract class CreateWorldScreenMixin extends Screen {
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-//		if (this.navigator.trySwitchTabsWithKey(keyCode)) {
-//			return true;
-//		}
 		this.prevBtn = this.getFocused();
 		if (Screen.hasShiftDown()) {
 			switch (keyCode) {

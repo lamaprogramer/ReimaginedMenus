@@ -28,10 +28,6 @@ public abstract class GameRendererMixin {
 
     @Shadow private long lastWorldIconUpdate;
 
-    @Shadow protected abstract void updateWorldIcon(Path path);
-
-    @Shadow protected abstract void updateWorldIcon();
-
     @Shadow @Final private static Logger LOGGER;
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;updateWorldIcon()V"))
@@ -64,7 +60,7 @@ public abstract class GameRendererMixin {
 
     private void imagePathToIcon(String path, Path destination, boolean isCustom) {
         try {
-            NativeImage nativeImage = null;
+            NativeImage nativeImage;
             if (isCustom) {
                 byte[] imageData = Files.readAllBytes(Paths.get(path));
                 nativeImage = NativeImage.read(imageData);

@@ -8,7 +8,7 @@
   "client": [
     "CreateWorldScreenMixin",
     "GameRendererMixin",
-    "WorldListWidgetMixin"
+    "WorldIconMixin"
   ],
   "injectors": {
     "defaultRequire": 1

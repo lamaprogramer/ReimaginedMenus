@@ -4,7 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.iamaprogrammer.reimaginedmenus.gui.screen.WorldIconScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.MultilineText;
-import net.minecraft.client.gui.DrawableHelper;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.texture.NativeImage;
 import net.minecraft.client.texture.NativeImageBackedTexture;
@@ -41,9 +41,9 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
     }
 
     @Override
-    protected void renderHeader(MatrixStack matrices, int x, int y) {
+    protected void renderHeader(DrawContext context, int x, int y) {
         MutableText text = Text.empty().append(this.title).formatted(Formatting.UNDERLINE, Formatting.BOLD);
-        this.client.textRenderer.draw(matrices, text, (float)(x + this.width / 2 - this.client.textRenderer.getWidth(text) / 2), (float)Math.min(this.top + 3, y), 0xFFFFFF);
+        context.drawText(this.client.textRenderer, text.asOrderedText(), (x + this.width / 2 - this.client.textRenderer.getWidth(text) / 2), Math.min(this.top + 3, y), 0xFFFFFF, true);
     }
 
     @Override
@@ -112,45 +112,6 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
             return Text.translatable("narrator.select", this.displayName);
         }
 
-        @Override
-        public void render(MatrixStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            InputStream inputStream = null;
-            NativeImageBackedTexture texture = null;
-            if (!this.isToLarge) {
-                try {
-                    File f = new File(fullPath);
-                    inputStream = new ByteArrayInputStream(Files.readAllBytes(f.toPath()));
-                    inputStream.close();
-                    texture = new NativeImageBackedTexture(NativeImage.read(inputStream));
-                    Identifier iconTexture = client.getTextureManager().registerDynamicTexture("worldicontexture", texture);
-
-                    RenderSystem.setShaderTexture(0, iconTexture);
-                } catch (Exception e) {
-                    RenderSystem.setShaderTexture(0, new Identifier("minecraft", "textures/misc/unknown_pack.png"));
-                }
-            } else {
-                DrawableHelper.fill(matrices, x - 1, y - 1, x + entryWidth - 9, y + entryHeight + 1, -8978432);
-                RenderSystem.setShaderTexture(0, new Identifier("minecraft", "textures/misc/unknown_pack.png"));
-            }
-            DrawableHelper.drawTexture(matrices, x, y, 0.0f, 0.0f, 32, 32, 32, 32);
-
-            // DO NOT REMOVE THIS BLOCK, it stops the icons from eating up your memory.
-            if (texture != null) {
-                texture.close();
-            }
-            OrderedText orderedText = this.displayName;
-            MultilineText multilineText = this.description;
-            if (this.isToLarge) {
-                multilineText = createMultilineText(client, Text.translatable("world.create.icon.filetoolarge", String.format("%.3f", this.fileSize)));
-            }
-            if (this.isSelectable() && (this.client.options.getTouchscreen().getValue().booleanValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
-                RenderSystem.setShaderTexture(0, RESOURCE_PACKS_TEXTURE);
-                DrawableHelper.fill(matrices, x, y, x + 32, y + 32, -1601138544);
-            }
-            this.client.textRenderer.drawWithShadow(matrices, orderedText, (float)(x + 32 + 2), (float)(y + 1), 0xFFFFFF);
-            multilineText.drawWithShadow(matrices, x + 32 + 2, y + 12, 10, 0x808080);
-        }
-
         public String getName() {
             return this.file.getName();
         }
@@ -171,6 +132,45 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
                 return true;
             }
             return false;
+        }
+
+        @Override
+        public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+            InputStream inputStream = null;
+            NativeImageBackedTexture texture = null;
+            if (!this.isToLarge) {
+                try {
+                    File f = new File(fullPath);
+                    inputStream = new ByteArrayInputStream(Files.readAllBytes(f.toPath()));
+                    inputStream.close();
+                    texture = new NativeImageBackedTexture(NativeImage.read(inputStream));
+                    Identifier iconTexture = client.getTextureManager().registerDynamicTexture("worldicontexture", texture);
+
+                    RenderSystem.setShaderTexture(0, iconTexture);
+                    context.drawTexture(iconTexture, x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+                } catch (Exception e) {
+                    context.drawTexture(new Identifier("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+                }
+            } else {
+                context.fill(x - 1, y - 1, x + entryWidth - 9, y + entryHeight + 1, -8978432);
+                context.drawTexture(new Identifier("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+            }
+
+            // DO NOT REMOVE THIS BLOCK, it stops the icons from eating up your memory.
+            if (texture != null) {
+                texture.close();
+            }
+            OrderedText orderedText = this.displayName;
+            MultilineText multilineText = this.description;
+            if (this.isToLarge) {
+                multilineText = createMultilineText(client, Text.translatable("world.create.icon.filetoolarge", String.format("%.3f", this.fileSize)));
+            }
+            if (this.isSelectable() && (this.client.options.getTouchscreen().getValue().booleanValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
+                RenderSystem.setShaderTexture(0, RESOURCE_PACKS_TEXTURE);
+                context.fill(x, y, x + 32, y + 32, -1601138544);
+            }
+            context.drawText(this.client.textRenderer, orderedText, (x + 32 + 2), (y + 1), 0xFFFFFF, true);
+            multilineText.drawWithShadow(context,x + 32 + 2, y + 12, 10, 0x808080);
         }
     }
 }

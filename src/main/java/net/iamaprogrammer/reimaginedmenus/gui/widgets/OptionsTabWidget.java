@@ -103,8 +103,6 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
 
     }
 
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {}
-
     public ScreenRect getNavigationFocus() {
         return this.grid.getNavigationFocus();
     }
@@ -128,6 +126,11 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     private @Nullable TabButtonWidget getCurrentTabButton() {
         int i = this.getCurrentTabIndex();
         return i != -1 ? (TabButtonWidget)this.tabButtons.get(i) : null;
+    }
+
+    @Override
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+
     }
 
 
