@@ -79,8 +79,8 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	 * @reason To completely re-style the menu.
 	 */
 
-	@Overwrite
-	public void init() {
+	@Inject(method = "init", at = @At("HEAD"), cancellable = true)
+	public void newInit(CallbackInfo ci) {
 		this.tabMenuWidth = this.width/3;
 		this.navigatorWidth = (int)(this.width/1.5);
 
@@ -136,6 +136,8 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		this.navigator.selectTab(currentTab, false);
 		this.worldCreator.update();
 		initTabNavigation();
+
+		ci.cancel();
 	}
 
 
