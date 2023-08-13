@@ -1,0 +1,15 @@
+{
+  "world.create.settings": "Nastavení",
+  "world.create.tab.general": "Obecné",
+  "world.create.tab.world": "Svět",
+  "world.create.tab.advanced": "Pokročílé",
+  "world.create.icon.filetoolarge": "%s KB Příliš velký soubor!! Prosím vyberte soubor menší než 50 KB.",
+  "world.create.icon.title": "Ikony světa",
+  "world.create.icon.folderinfo": "(Umístěte soubory s ikonami sem)",
+  "world.create.icon.dropinfo": "Přetáhněte soubory do tohoto okna pro přidání ikon",
+  "world.create.icon.openfolder": "Otevřít složku s ikonami",
+  "world.create.icon.dropConfirm": "Chcete přidat následující ikony do Minecraftu?",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "Zcela přepracujte nabídku Vytvořit svět.",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus přepracovává design některých nabídek světa ve stylu Bedrock Edition, přičemž stále zachovává vzhled a atmosféru Javy!"
+}
