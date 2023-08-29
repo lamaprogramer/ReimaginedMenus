@@ -1,21 +1,18 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
+import net.iamaprogrammer.reimaginedmenus.util.TabUtils;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.WorldCreator;
-import net.minecraft.client.gui.tab.GridScreenTab;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
 
-import java.io.File;
 
-
-public class GeneralTab extends GridScreenTab {
+public class GeneralTab extends BasicTab {
     private static final Text GAME_TAB_TITLE_TEXT = Text.translatable("createWorld.tab.game.title");
     private static final Text ALLOW_COMMANDS_TEXT = Text.translatable("selectWorld.allowCommands");
     private static final Text GAME_MODE_TEXT = Text.translatable("selectWorld.gameMode");
@@ -23,15 +20,8 @@ public class GeneralTab extends GridScreenTab {
     private static final Text ALLOW_COMMANDS_INFO_TEXT = Text.translatable("selectWorld.allowCommands.info");
     private final TextFieldWidget worldNameField;
 
-    private final int posX;
-    private final int posY;
-
-    public GeneralTab(MinecraftClient client, WorldCreator worldCreator, CreateWorldScreen target, TextRenderer renderer, int posX, int posY) {
-        super(GAME_TAB_TITLE_TEXT);
-        this.posX = posX;
-        this.posY = posY;
-
-        File file3 = new File(client.runDirectory, "worldicons/");
+    public GeneralTab(TabUtils utils, CreateWorldScreen target, String key, Identifier icon, int posX) {
+        super(utils, posX, key, icon, GAME_TAB_TITLE_TEXT);
 
         GridWidget.Adder adder = this.grid.setRowSpacing(8).createAdder(1);
         Positioner positioner = adder.copyPositioner().marginLeft(this.posX).marginTop(this.posY);
@@ -43,7 +33,6 @@ public class GeneralTab extends GridScreenTab {
         this.worldNameField.setText(worldCreator.getWorldName());
         this.worldNameField.setChangedListener(worldCreator::setWorldName);
         worldCreator.addListener(creator -> this.worldNameField.setTooltip(Tooltip.of(Text.translatable("selectWorld.targetFolder", Text.literal(creator.getWorldDirectoryName()).formatted(Formatting.ITALIC)))));
-        //CreateWorldScreen.super.setInitialFocus(this.worldNameField);
         adder.add(adder2.getGridWidget(), adder.copyPositioner().alignHorizontalCenter());
 
         CyclingButtonWidget<WorldCreator.Mode> cyclingButtonWidget = (CyclingButtonWidget)adder.add(CyclingButtonWidget.builder(value -> ((WorldCreator.Mode)value).name).values((WorldCreator.Mode[])new WorldCreator.Mode[]{WorldCreator.Mode.SURVIVAL, WorldCreator.Mode.HARDCORE, WorldCreator.Mode.CREATIVE}).build(0, 0, 210, 20, GAME_MODE_TEXT, (button, value) -> worldCreator.setGameMode((WorldCreator.Mode)((Object)value))), positioner);

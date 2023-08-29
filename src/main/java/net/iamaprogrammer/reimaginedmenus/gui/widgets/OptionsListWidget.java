@@ -7,20 +7,23 @@ import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.widget.AlwaysSelectedEntryListWidget;
 import net.minecraft.client.gui.widget.EntryListWidget;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.OrderedText;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
-import net.minecraft.world.gen.WorldPresets;
+import net.minecraft.world.gen.WorldPreset;
 
+import java.io.FileNotFoundException;
 import java.util.Objects;
+import java.util.Optional;
 
 public class OptionsListWidget extends EntryListWidget<OptionsListWidget.OptionsPackEntry> {
     static final Identifier VERTICAL_SEPARATOR_TEXTURE = new Identifier("reimaginedmenus","textures/gui/vertical_separator.png");
     private static final Text SELECTION_USAGE_TEXT = Text.translatable("narration.selection.usage");
-    private final Identifier DEFAULT_WORLD_IMAGE = new Identifier("reimaginedmenus", "textures/misc/default.png");
+    private final Identifier DEFAULT_WORLD_IMAGE = new Identifier("reimaginedmenus", "textures/misc/normal.png");
     private final WorldCreator worldCreator;
     private final Text title;
     private final int size;
@@ -48,21 +51,18 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         // small dimensions: 192, 108
 
         if (this.worldCreator != null) {
-            Identifier texture = null;
-            if(worldCreator.getWorldType().preset().matchesId(WorldPresets.FLAT.getValue())) {
-                texture = new Identifier("reimaginedmenus", "textures/misc/superflat.png");
-            } else if(worldCreator.getWorldType().preset().matchesId(WorldPresets.AMPLIFIED.getValue())) {
-                texture = new Identifier("reimaginedmenus", "textures/misc/amplified.png");
-            } else if(worldCreator.getWorldType().preset().matchesId(WorldPresets.DEBUG_ALL_BLOCK_STATES.getValue())) {
-                texture = new Identifier("reimaginedmenus", "textures/misc/debug.png");
-            } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.LARGE_BIOMES.getValue())) {
-                texture = new Identifier("reimaginedmenus", "textures/misc/large.png");
-            } else if (worldCreator.getWorldType().preset().matchesId(WorldPresets.SINGLE_BIOME_SURFACE.getValue())) {
-                texture = new Identifier("reimaginedmenus", "textures/misc/single.png");
-            } else {
-                texture = new Identifier("reimaginedmenus", "textures/misc/default.png");
+            Identifier texture = new Identifier("reimaginedmenus", "textures/misc/normal.png");
+            if (worldCreator.getWorldType().preset() != null) {
+                Optional<RegistryKey<WorldPreset>> key = worldCreator.getWorldType().preset().getKey();
+                if (key.isPresent()) {
+                    String path = key.get().getValue().getPath();
+                    Identifier resource = new Identifier("reimaginedmenus", "textures/misc/"+path+".png");
+                    try {
+                        this.client.getResourceManager().getResourceOrThrow(resource);
+                        texture = resource;
+                    } catch (FileNotFoundException ignored) {}
+                }
             }
-
             context.drawTexture(texture, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
         } else {
             context.drawTexture(this.DEFAULT_WORLD_IMAGE, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
@@ -93,8 +93,8 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
-    public void add(MinecraftClient client, OptionsListWidget widget, Text name, Identifier icon, OptionsPackEntry.PressAction action) {
-        OptionsListWidget.OptionsPackEntry entry = new OptionsPackEntry(client, widget, name, this.listWidth, icon, action);
+    public void add(MinecraftClient client, OptionsListWidget widget, Text name, Identifier icon, int id, OptionsPackEntry.PressAction action) {
+        OptionsListWidget.OptionsPackEntry entry = new OptionsPackEntry(client, widget, name, this.listWidth, icon, id, action);
         entry.setId(this.children().size());
         this.children().add(entry);
         //return entry.getId();
@@ -130,12 +130,13 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
 
         private final int width;
 
-        public OptionsPackEntry(MinecraftClient client, OptionsListWidget widget, Text name, int width, Identifier icon, PressAction action) {
+        public OptionsPackEntry(MinecraftClient client, OptionsListWidget widget, Text name, int width, Identifier icon, int id, PressAction action) {
             this.client = client;
             this.widget = widget;
             this.tabIcon = icon;
             this.width = width;
             this.pressAction = action;
+            this.id = id;
             this.optionName = trimTextToWidth(client, name);
         }
 
@@ -172,7 +173,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
 
 
         public interface PressAction {
-            void onPress();
+            void onPress(int id);
         }
 
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
@@ -182,7 +183,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
                 double d = mouseX - (double)this.widget.getRowLeft();
                 double e = mouseY - (double)this.widget.getRowTop(this.widget.children().indexOf(this));
                 if (d <= this.width) {
-                    this.pressAction.onPress();
+                    this.pressAction.onPress(this.id);
                     return true;
                 }
 

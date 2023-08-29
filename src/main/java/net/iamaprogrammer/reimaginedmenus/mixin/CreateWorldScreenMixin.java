@@ -1,11 +1,12 @@
 package net.iamaprogrammer.reimaginedmenus.mixin;
 
+import com.google.common.collect.ImmutableList;
 import net.iamaprogrammer.reimaginedmenus.gui.screen.WorldIconScreen;
-import net.iamaprogrammer.reimaginedmenus.gui.tabs.AdvancedTab;
-import net.iamaprogrammer.reimaginedmenus.gui.tabs.GeneralTab;
-import net.iamaprogrammer.reimaginedmenus.gui.tabs.WorldTab;
+import net.iamaprogrammer.reimaginedmenus.gui.tabs.BasicTab;
 import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsListWidget;
 import net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget;
+import net.iamaprogrammer.reimaginedmenus.util.MenuSettings;
+import net.iamaprogrammer.reimaginedmenus.util.TabUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.screen.Screen;
@@ -16,10 +17,8 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.client.gui.widget.Positioner;
 import net.minecraft.client.gui.widget.SimplePositioningWidget;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,16 +32,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 
 	@Shadow @Final private TabManager tabManager;
 	@Shadow @Final private WorldCreator worldCreator;
-
 	@Shadow protected abstract void createLevel();
-
 	@Shadow public abstract void onCloseScreen();
-
 	@Shadow protected abstract <T extends Element & Drawable & Selectable> T addDrawableChild(T drawableElement);
-
-	private final Identifier GENERAL_SETTINGS_ICON = new Identifier("minecraft", "textures/block/crafting_table_top.png");
-	private final Identifier ADVANCED_SETTINGS_ICON = new Identifier("minecraft", "textures/block/furnace_front.png");
-	private final Identifier CHEATS_SETTINGS_ICON = new Identifier("minecraft", "textures/block/enchanting_table_top.png");
 	private final CreateWorldScreen target =  ((CreateWorldScreen)(Object)this);
 	private OptionsTabWidget navigator;
 	private OptionsListWidget tabMenu;
@@ -69,16 +61,10 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		super(title);
 	}
 
-	/**
-	 * @author Iamaprogrammer
-	 * @reason To completely re-style the menu.
-	 */
-
 	@Inject(method = "init", at = @At("HEAD"), cancellable = true)
 	protected void newInit(CallbackInfo ci) {
 		this.tabMenuWidth = this.width/3;
 		this.navigatorWidth = (int)(this.width/1.5);
-
 
 		this.createWorldWidth = (this.navigatorWidth/2) - 20;
 		this.createWorldHeight = 20;
@@ -90,28 +76,19 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		this.tabMenu = new OptionsListWidget(this.client, this.worldCreator, this.tabMenuWidth, this.height, 20, Text.translatable("world.create.settings"));
 		this.addDrawableChild(this.tabMenu);
 
-		GeneralTab generalTab = new GeneralTab(this.client, this.worldCreator, this.target, this.textRenderer, this.navigatorWidth, 0);
-		WorldTab worldTab = new WorldTab(this.client, target, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
-		AdvancedTab advancedTab = new AdvancedTab(this.client, target, this.worldCreator, this.textRenderer, this.navigatorWidth, 0);
-
-		this.navigator = OptionsTabWidget.builder(this.tabManager, this.tabMenuWidth, 0).tabs(generalTab, worldTab, advancedTab).build();
+		TabUtils utils = new TabUtils(this.client, this.worldCreator, this.textRenderer);
+		this.navigator = MenuSettings.init(utils, this.tabManager, this.target, this.navigatorWidth, this.tabMenuWidth);
 		this.addDrawableChild(this.navigator);
 
 
-		this.tabMenu.add(this.client, this.tabMenu, Text.translatable("world.create.tab.general"), this.GENERAL_SETTINGS_ICON, () -> {
-			this.navigator.selectTab(0, true);
-			this.currentTab = 0;
-		});
-
-		this.tabMenu.add(this.client, this.tabMenu, Text.translatable("world.create.tab.world"), this.ADVANCED_SETTINGS_ICON, () -> {
-			this.navigator.selectTab(1, true);
-			this.currentTab = 1;
-		});
-
-		this.tabMenu.add(this.client, this.tabMenu, Text.translatable("world.create.tab.advanced"), this.CHEATS_SETTINGS_ICON, () -> {
-			this.navigator.selectTab(2, true);
-			this.currentTab = 2;
-		});
+		ImmutableList<BasicTab> tabs = this.navigator.getTabs();
+		for (int i = 0; i < MenuSettings.numberOfTabs; i++) {
+			BasicTab tab = tabs.get(i);
+			this.tabMenu.add(this.client, this.tabMenu, Text.translatable(tab.translationKey), tab.icon, i, (id) -> {
+				this.navigator.selectTab(id, true);
+				this.currentTab = id;
+			});
+		}
 
 		this.tabMenu.selectTab(this.currentTab);
 		this.grid = new GridWidget().setColumnSpacing(8);

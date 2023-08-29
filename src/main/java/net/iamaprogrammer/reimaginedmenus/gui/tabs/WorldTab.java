@@ -1,19 +1,18 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
 import net.iamaprogrammer.reimaginedmenus.gui.screen.WorldIconScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
+import net.iamaprogrammer.reimaginedmenus.util.TabUtils;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.LevelScreenProvider;
 import net.minecraft.client.gui.screen.world.WorldCreator;
 import net.minecraft.client.gui.screen.world.WorldScreenOptionGrid;
-import net.minecraft.client.gui.tab.GridScreenTab;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
-public class WorldTab extends GridScreenTab {
+public class WorldTab extends BasicTab {
     private static final Text WORLD_TAB_TITLE_TEXT = Text.translatable("createWorld.tab.world.title");
     private static final Text AMPLIFIED_GENERATOR_INFO_TEXT = Text.translatable("generator.minecraft.amplified.info");
     private static final Text MAP_FEATURES_TEXT = Text.translatable("selectWorld.mapFeatures");
@@ -32,24 +31,13 @@ public class WorldTab extends GridScreenTab {
     private final TextFieldWidget seedField;
     private final ButtonWidget customizeButton;
     private final ButtonWidget worldIconsButton;
-
-    private final MinecraftClient client;
-    private final WorldCreator worldCreator;
     private final CreateWorldScreen target;
-
-
     private final int buttonWidth;
-    private final int posX;
-    private final int posY;
 
 
-    public WorldTab(MinecraftClient client, CreateWorldScreen target, WorldCreator worldCreator, TextRenderer renderer, int posX, int posY) {
-        super(WORLD_TAB_TITLE_TEXT);
-        this.client = client;
-        this.worldCreator = worldCreator;
+    public WorldTab(TabUtils utils, CreateWorldScreen target, String key, Identifier icon, int posX) {
+        super(utils, posX, key, icon, WORLD_TAB_TITLE_TEXT);
         this.target = target;
-        this.posX = posX;
-        this.posY = posY;
         this.buttonWidth = (int)((this.posX/1.5) - 20);
         
         GridWidget.Adder adder = this.grid.setRowSpacing(8).createAdder(2);
@@ -148,10 +136,5 @@ public class WorldTab extends GridScreenTab {
         }
         return worldTypeButton.getGenericNarrationMessage();
     }
-
-//    @Override
-//    public void tick() {
-//        this.seedField.tick();
-//    }
 }
 
