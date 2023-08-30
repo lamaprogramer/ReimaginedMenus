@@ -1,6 +1,7 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
 import com.google.common.collect.ImmutableList;
+import net.iamaprogrammer.reimaginedmenus.gui.tabs.BasicTab;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.gui.navigation.GuiNavigation;
 import net.minecraft.client.gui.navigation.GuiNavigationPath;
@@ -21,11 +22,11 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     private static final Text USAGE_NARRATION_TEXT = Text.translatable("narration.tab_navigation.usage");
     private final GridWidget grid;
     private final TabManager tabManager;
-    private final ImmutableList<Tab> tabs;
+    private final ImmutableList<BasicTab> tabs;
     private final ImmutableList<TabButtonWidget> tabButtons;
 
 
-    OptionsTabWidget(TabManager tabManager, Iterable<Tab> tabs, int posX, int posY) {
+    OptionsTabWidget(TabManager tabManager, Iterable<BasicTab> tabs, int posX, int posY) {
         this.tabManager = tabManager;
         this.tabs = ImmutableList.copyOf(tabs);
         this.grid = new GridWidget(0, 0);
@@ -41,7 +42,9 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
         }
         this.tabButtons = builder.build();
     }
-
+    public ImmutableList<BasicTab> getTabs() {
+        return this.tabs;
+    }
     public static net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder builder(TabManager tabManager, int posX, int posY) {
         return new net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder(tabManager, posX, posY);
     }
@@ -133,7 +136,7 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
 
     public static class Builder {
         private final TabManager tabManager;
-        private final List<Tab> tabs = new ArrayList<>();
+        private final List<BasicTab> tabs = new ArrayList<>();
         private final int posX;
         private final int posY;
 
@@ -143,7 +146,7 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
             this.posY = y;
         }
 
-        public net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder tabs(Tab... tabs) {
+        public net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder tabs(BasicTab... tabs) {
             Collections.addAll(this.tabs, tabs);
             return this;
         }

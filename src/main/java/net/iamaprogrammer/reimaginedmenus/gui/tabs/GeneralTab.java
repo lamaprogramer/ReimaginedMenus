@@ -1,6 +1,7 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
 
+import net.iamaprogrammer.reimaginedmenus.util.TabUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
@@ -10,12 +11,13 @@ import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.*;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.Difficulty;
 
 import java.io.File;
 
 
-public class GeneralTab extends GridScreenTab {
+public class GeneralTab extends BasicTab {
     private static final Text GAME_TAB_TITLE_TEXT = Text.translatable("createWorld.tab.game.title");
     private static final Text ALLOW_COMMANDS_TEXT = Text.translatable("selectWorld.allowCommands");
     private static final Text GAME_MODE_TEXT = Text.translatable("selectWorld.gameMode");
@@ -23,13 +25,8 @@ public class GeneralTab extends GridScreenTab {
     private static final Text ALLOW_COMMANDS_INFO_TEXT = Text.translatable("selectWorld.allowCommands.info");
     private final TextFieldWidget worldNameField;
 
-    private final int posX;
-    private final int posY;
-
-    public GeneralTab(MinecraftClient client, WorldCreator worldCreator, TextRenderer renderer, int posX, int posY) {
-        super(GAME_TAB_TITLE_TEXT);
-        this.posX = posX;
-        this.posY = posY;
+    public GeneralTab(TabUtils utils, CreateWorldScreen target, String key, Identifier icon, int posX) {
+        super(utils, posX, key, icon, GAME_TAB_TITLE_TEXT);
 
         GridWidget.Adder adder = this.grid.setRowSpacing(8).createAdder(1);
         Positioner positioner = adder.copyPositioner().marginLeft(this.posX).marginTop(this.posY);

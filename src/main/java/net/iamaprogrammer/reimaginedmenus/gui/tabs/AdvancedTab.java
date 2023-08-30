@@ -1,5 +1,6 @@
 package net.iamaprogrammer.reimaginedmenus.gui.tabs;
 
+import net.iamaprogrammer.reimaginedmenus.util.TabUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
@@ -10,29 +11,21 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.GridWidget;
 import net.minecraft.client.gui.widget.Positioner;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 
 
-public class AdvancedTab extends GridScreenTab {
+public class AdvancedTab extends BasicTab {
     private static final Text MORE_TAB_TITLE_TEXT = Text.translatable("createWorld.tab.more.title");
     private static final Text GAME_RULES_TEXT = Text.translatable("selectWorld.gameRules");
     private static final Text DATA_PACKS_TEXT = Text.translatable("selectWorld.dataPacks");
     private static final Text EXPERIMENTS_TEXT = Text.translatable("selectWorld.experiments");
-
-    private final MinecraftClient client;
-    private final WorldCreator worldCreator;
     private final CreateWorldScreen target;
-
     private final int buttonWidth;
-    private final int posX;
-    private final int posY;
 
-    public AdvancedTab(MinecraftClient client, CreateWorldScreen target, WorldCreator worldCreator, int posX, int posY) {
-        super(MORE_TAB_TITLE_TEXT);
-        this.client = client;
-        this.worldCreator = worldCreator;
+
+    public AdvancedTab(TabUtils utils, CreateWorldScreen target, String key, Identifier icon, int posX) {
+        super(utils, posX, key, icon, MORE_TAB_TITLE_TEXT);
         this.target = target;
-        this.posX = posX;
-        this.posY = posY;
         this.buttonWidth = (int)((this.posX/1.5) - 20);
 
         GridWidget.Adder adder = this.grid.setRowSpacing(8).createAdder(1);
