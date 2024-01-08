@@ -44,11 +44,9 @@ public class MenuSettings {
     private static Identifier getIconFromJson(String key, JsonObject object, Identifier def) {
         if (object != null) {
             try {
-                System.out.println("Parsed json.");
                 return new Identifier(object.get(key).getAsString());
             } catch (InvalidIdentifierException ignored) {}
         }
-        System.out.println("Could not parse json.");
         return def;
     }
 }
