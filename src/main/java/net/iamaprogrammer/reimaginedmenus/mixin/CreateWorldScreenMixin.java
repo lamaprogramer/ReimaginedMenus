@@ -19,12 +19,16 @@ import net.minecraft.client.gui.widget.Positioner;
 import net.minecraft.client.gui.widget.SimplePositioningWidget;
 import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CreateWorldScreen.class)
@@ -35,6 +39,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	@Shadow protected abstract void createLevel();
 	@Shadow public abstract void onCloseScreen();
 	@Shadow protected abstract <T extends Element & Drawable & Selectable> T addDrawableChild(T drawableElement);
+
+	@Shadow public abstract void renderBackgroundTexture(DrawContext context);
+
 	private final CreateWorldScreen target =  ((CreateWorldScreen)(Object)this);
 	private OptionsTabWidget navigator;
 	private OptionsListWidget tabMenu;
@@ -112,8 +119,14 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		ci.cancel();
 	}
 
-	@Inject(method = "render", at = @At("HEAD"))
+	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawTexture(Lnet/minecraft/util/Identifier;IIFFIIII)V"), index = 1)
+	public int divider(int x) {
+		return this.tabMenuWidth+1;
+	}
+
+	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
 	public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+		this.renderBackgroundTexture(context);
 	}
 
 	@Override

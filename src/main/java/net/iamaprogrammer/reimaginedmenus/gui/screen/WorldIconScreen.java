@@ -80,12 +80,14 @@ public class WorldIconScreen extends Screen {
 
     @Override
     protected void init() {
-        this.availableIconsList = new WorldIconListWidget(this.client, this, 200, this.height, Text.translatable("pack.available.title"));
-        this.availableIconsList.setLeftPos((this.width - 200)/2);
+        int POSY = this.height - 48;
+
+        this.availableIconsList = this.addDrawableChild(new WorldIconListWidget(this.client, this, 200, (int) (this.height/1.5), Text.translatable("pack.available.title")));
+        this.availableIconsList.setX((this.width - 200)/2);
         this.addSelectableChild(this.availableIconsList);
 
-        this.addDrawableChild(ButtonWidget.builder(Text.translatable("world.create.icon.openfolder"), button -> Util.getOperatingSystem().open(this.file.toUri())).dimensions(this.width / 2 - 154, this.height - 48, 150, 20).tooltip(Tooltip.of(FOLDER_INFO)).build());
-        this.doneButton = this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> this.close()).dimensions(this.width / 2 + 4, this.height - 48, 150, 20).build());
+        this.addDrawableChild(ButtonWidget.builder(Text.translatable("world.create.icon.openfolder"), button -> Util.getOperatingSystem().open(this.file.toUri())).dimensions(this.width / 2 - 154, POSY, 150, 20).tooltip(Tooltip.of(FOLDER_INFO)).build());
+        this.doneButton = this.addDrawableChild(ButtonWidget.builder(ScreenTexts.DONE, button -> this.close()).dimensions(this.width / 2 + 4, POSY, 150, 20).build());
         this.refresh();
     }
 
@@ -160,7 +162,7 @@ public class WorldIconScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackgroundTexture(context);
+        this.renderBackground(context, mouseX, mouseY, delta);
         this.availableIconsList.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
         context.drawCenteredTextWithShadow(this.textRenderer, DROP_INFO, this.width / 2, 20, 0xFFFFFF);
