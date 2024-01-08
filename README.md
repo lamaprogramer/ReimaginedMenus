@@ -1,6 +1,6 @@
 # Reimagined World Menu
 
-### Note: I pretty much had to throw out the original world menu, so mod compatibility is and probably always will be non-existent
+### Note: I pretty much had to throw out the original world menu, so mod compatibility with mods that also modify the world menu is and probably always will be non-existent
 
 Completely Re-designs the Create World menu, as well as making some changes to the world list.
 
