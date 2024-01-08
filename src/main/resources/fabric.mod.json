@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "reimaginedmenus",
+  "version": "${version}",
+
+  "name": "Reimagined Menus",
+  "description": "Redesigns some of the menus to look more like bedrock, while keeping the Java feel!",
+  "accessWidener" : "reimaginedmenus.accesswidener",
+  "authors": [
+    "Iamaprogrammer"
+  ],
+  "contact": {
+    "homepage": "https://github.com/lamaprogramer/ReimaginedMenus",
+    "sources": "https://github.com/lamaprogramer/ReimaginedMenus"
+  },
+
+  "license": "MIT",
+  "icon": "assets/reimaginedmenus/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [],
+    "client": [
+      "net.iamaprogrammer.reimaginedmenus.ReimaginedMenus"
+    ]
+  },
+  "mixins": [
+    "reimaginedmenus.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "minecraft": ">=1.20.3",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.iamaprogrammer.reimaginedmenus.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "CreateWorldScreenMixin",
+    "GameRendererMixin",
+    "WorldIconMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

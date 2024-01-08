@@ -1,0 +1,5 @@
+{
+  "general_settings_icon": "minecraft:textures/block/crafting_table_top.png",
+  "world_settings_icon": "minecraft:textures/block/furnace_front.png",
+  "advanced_settings_icon": "minecraft:textures/block/enchanting_table_top.png"
+}

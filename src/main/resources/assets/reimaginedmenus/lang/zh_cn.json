@@ -1,0 +1,15 @@
+{
+  "world.create.settings": "设置",
+  "world.create.tab.general": "基本",
+  "world.create.tab.world": "世界",
+  "world.create.tab.advanced": "高级",
+  "world.create.icon.filetoolarge": "%s KB 的文件太大了，请选择一张不大于50KB的文件。",
+  "world.create.icon.title": "世界图标",
+  "world.create.icon.folderinfo": "（把世界图标放这里）",
+  "world.create.icon.dropinfo": "将文件拖放到该窗口以添加图标",
+  "world.create.icon.openfolder": "打开图标文件夹",
+  "world.create.icon.dropConfirm": "您是否要将以下图标添加至Minecraft？",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "完全重新设计“创建世界”界面。",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus使用基岩版风格的菜单重新设计了“创建世界”菜单，同时仍然保持了Java版的外观和感觉！"
+}
