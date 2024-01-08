@@ -80,7 +80,7 @@ public class WorldIconScreen extends Screen {
 
     @Override
     protected void init() {
-        this.availableIconsList = new WorldIconListWidget(this.client, this, 200, this.height, Text.translatable("pack.available.title"));
+        this.availableIconsList = this.addDrawableChild(new WorldIconListWidget(this.client, this, 200, this.height, Text.translatable("pack.available.title")));
         this.availableIconsList.setLeftPos((this.width - 200)/2);
         this.addSelectableChild(this.availableIconsList);
 
@@ -134,7 +134,7 @@ public class WorldIconScreen extends Screen {
                 }
             } else {
                 removedItems.add(name);
-                String nameToPath = Path.of(new File(this.client.runDirectory, "worldicons\\").toURI()) + "\\" + name;
+                String nameToPath = Path.of(new File(this.client.runDirectory, "worldicons"+File.separator).getAbsolutePath(), name).toString();
                 System.out.println(nameToPath);
                 System.out.println(WorldIconScreen.SELECTED_ICON);
                 WorldIconScreen.SELECTED_ICON = nameToPath.equals(WorldIconScreen.SELECTED_ICON) ? null : WorldIconScreen.SELECTED_ICON;
