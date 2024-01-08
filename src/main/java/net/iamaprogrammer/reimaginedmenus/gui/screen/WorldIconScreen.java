@@ -136,8 +136,7 @@ public class WorldIconScreen extends Screen {
                 }
             } else {
                 removedItems.add(name);
-                String nameToPath = Path.of(new File(this.client.runDirectory, "worldicons\\").toURI()) + "\\" + name;
-                System.out.println(nameToPath);
+                String nameToPath = Path.of(new File(this.client.runDirectory, "worldicons"+File.separator).getAbsolutePath(), name).toString();                System.out.println(nameToPath);
                 System.out.println(WorldIconScreen.SELECTED_ICON);
                 WorldIconScreen.SELECTED_ICON = nameToPath.equals(WorldIconScreen.SELECTED_ICON) ? null : WorldIconScreen.SELECTED_ICON;
             }
