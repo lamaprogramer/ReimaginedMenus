@@ -8,4 +8,8 @@
   "world.create.icon.folderinfo": "(Wstaw ikonkę świata tutaj)",
   "world.create.icon.dropinfo": "Pociągnij i puść pliki do tego okna aby dodać ikonkę.",
   "world.create.icon.openfolder": "Otwórz folder ikonek"
+  "world.create.icon.dropConfirm": "Chcesz dodac te ikonki do Minecrafta?",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "Całkowicie przerobione menu tworzenia świata.",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus wymyśla na nowo menu tworzenia świata w stylu Bedrock i w tym samym czasie nie traci wyglądu i uczucia Javy!"
 }
