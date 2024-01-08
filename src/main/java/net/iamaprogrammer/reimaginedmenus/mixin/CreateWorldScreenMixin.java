@@ -124,7 +124,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		return this.tabMenuWidth+1;
 	}
 
-	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "render", at = @At("HEAD"))
 	public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 		this.renderBackgroundTexture(context);
 	}
