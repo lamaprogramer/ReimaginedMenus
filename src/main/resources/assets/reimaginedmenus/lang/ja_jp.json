@@ -7,7 +7,7 @@
   "world.create.icon.title": "ワールドのアイコン",
   "world.create.icon.folderinfo": "(ここにアイコンのファイルを置いてください。)",
   "world.create.icon.dropinfo": "このウィンドウにファイルをドラッグ＆ドロップすると、アイコンが追加されます。",
-  "world.create.icon.openfolder": "アイコンフォルダを開く"
+  "world.create.icon.openfolder": "アイコンフォルダを開く",
   "world.create.icon.dropConfirm": "マインクラフトに以下のアイコンを追加しますか？",
   "modmenu.summaryTranslation.reimaginedmenus": "ワールドの作るのメニューを全部で衣替えをする。",
   "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menusは、Java Editionのルック＆フィールを維持しつつ、一部のワールドメニューのデザインをBedrock Edition風のメニューに再構築しています！"
