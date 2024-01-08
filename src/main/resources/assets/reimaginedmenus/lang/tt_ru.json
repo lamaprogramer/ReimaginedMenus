@@ -1,0 +1,15 @@
+{
+    "world.create.settings": "Көйләүләр",
+    "world.create.tab.general": "Гомуми",
+    "world.create.tab.world": "Дөнья",
+    "world.create.tab.advanced": "Advanced",
+    "world.create.icon.filetoolarge": "%s КБ — артык зур күләме!! 50 КБ-тан кимрәк файлны сайлагызчы.",
+    "world.create.icon.title": "Дөнья тамгачыклары",
+    "world.create.icon.folderinfo": "(Тамгачык файлларын монда салыгыз)",
+    "world.create.icon.dropinfo": "Тамгачыкларны өстәү өчен файлларны бу тәрәзәгә күчерегез",
+    "world.create.icon.openfolder": "Тамгачык папкасы",
+    "world.create.icon.dropConfirm": "Менә мондый тамгачыкларны Minecraft-ка өстәргә телисезме?",
+  
+    "modmenu.summaryTranslation.reimaginedmenus": "Дөньяны ясау менюсының тулы дизайн үзгәртү.",
+    "modmenu.descriptionTranslation.reimaginedmenus": "Шул ук вакытта Java-ның тышкы кыяфәтен калдырып, Reimagined Menus моды Bedrock кебек стильләштерелгән менюлар белән кайбер дөнья менюлары дизайнын яңадан бирә!"
+}
