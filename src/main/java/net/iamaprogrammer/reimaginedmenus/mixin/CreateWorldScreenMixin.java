@@ -35,6 +35,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(CreateWorldScreen.class)
@@ -135,9 +136,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		ci.cancel();
 	}
 
-
-	@Inject(method = "render", at = @At("HEAD"))
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+	@ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/world/CreateWorldScreen;drawTexture(Lnet/minecraft/client/util/math/MatrixStack;IIFFIIII)V"), index = 1)
+	public int divider(int x) {
+		return this.tabMenuWidth+1;
 	}
 
 	@Override
