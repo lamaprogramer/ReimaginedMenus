@@ -26,6 +26,7 @@ public abstract class WorldIconMixin {
 
     @Shadow public abstract void destroy();
 
+
     @Inject(method = "load", at = @At("HEAD"), cancellable = true)
     public void removeIconLimits(NativeImage image, CallbackInfo ci) {
         try {

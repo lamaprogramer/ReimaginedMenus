@@ -85,8 +85,8 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
             this.client = client;
             this.widget = widget;
             this.file = path;
-            this.worldIconsFolder = Path.of(new File(client.runDirectory, "worldicons\\").toURI());
-            this.fullPath = worldIconsFolder + "\\" + this.file.getName();
+            this.worldIconsFolder = Path.of(new File(client.runDirectory, "worldicons" + File.separator).toURI());
+            this.fullPath = worldIconsFolder + File.separator + this.file.getName();
             this.fileSize = (float)(Files.size(Path.of(fullPath)))/1000;
             this.description = createMultilineText(client, Text.of(String.format("%.3f", this.fileSize) + "KB"));
             this.isToLarge = this.fileSize > 50;
