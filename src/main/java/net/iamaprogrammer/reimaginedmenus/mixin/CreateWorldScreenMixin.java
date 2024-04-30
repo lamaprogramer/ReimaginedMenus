@@ -40,7 +40,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	@Shadow public abstract void onCloseScreen();
 	@Shadow protected abstract <T extends Element & Drawable & Selectable> T addDrawableChild(T drawableElement);
 
-	@Shadow public abstract void renderBackgroundTexture(DrawContext context);
+	@Shadow protected abstract void renderDarkening(DrawContext context);
 
 	private final CreateWorldScreen target =  ((CreateWorldScreen)(Object)this);
 	private OptionsTabWidget navigator;
@@ -124,9 +124,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 		return this.tabMenuWidth+1;
 	}
 
-	@Inject(method = "render", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "render", at = @At("HEAD"))
 	public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-		this.renderBackgroundTexture(context);
+		this.renderDarkening(context);
 	}
 
 	@Override

@@ -52,7 +52,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
     }
 
     @Override
-    protected int getScrollbarPositionX() {
+    protected int getScrollbarX() {
         return this.getRight() - 6;
     }
 
