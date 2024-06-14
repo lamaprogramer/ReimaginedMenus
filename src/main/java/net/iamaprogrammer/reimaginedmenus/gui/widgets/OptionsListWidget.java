@@ -21,9 +21,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class OptionsListWidget extends EntryListWidget<OptionsListWidget.OptionsPackEntry> {
-    static final Identifier VERTICAL_SEPARATOR_TEXTURE = new Identifier("reimaginedmenus","textures/gui/vertical_separator.png");
+    static final Identifier VERTICAL_SEPARATOR_TEXTURE = Identifier.of("reimaginedmenus","textures/gui/vertical_separator.png");
     private static final Text SELECTION_USAGE_TEXT = Text.translatable("narration.selection.usage");
-    private final Identifier DEFAULT_WORLD_IMAGE = new Identifier("reimaginedmenus", "textures/misc/normal.png");
+    private final Identifier DEFAULT_WORLD_IMAGE = Identifier.of("reimaginedmenus", "textures/misc/normal.png");
     private final WorldCreator worldCreator;
     private final Text title;
     private final int size;
@@ -53,12 +53,12 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         // small dimensions: 192, 108
 
         if (this.worldCreator != null) {
-            Identifier texture = new Identifier("reimaginedmenus", "textures/misc/normal.png");
+            Identifier texture = Identifier.of("reimaginedmenus", "textures/misc/normal.png");
             if (worldCreator.getWorldType().preset() != null) {
                 Optional<RegistryKey<WorldPreset>> key = worldCreator.getWorldType().preset().getKey();
                 if (key.isPresent()) {
                     String path = key.get().getValue().getPath();
-                    Identifier resource = new Identifier("reimaginedmenus", "textures/misc/"+path+".png");
+                    Identifier resource = Identifier.of("reimaginedmenus", "textures/misc/"+path+".png");
                     try {
                         this.client.getResourceManager().getResourceOrThrow(resource);
                         texture = resource;

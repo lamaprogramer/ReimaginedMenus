@@ -17,9 +17,9 @@ import java.io.IOException;
 
 public class MenuSettings {
     private static final JsonObject icons = getIcons();
-    private static final Identifier GENERAL_SETTINGS_ICON = getIconFromJson("general_settings_icon", icons, new Identifier("minecraft", "textures/block/crafting_table_top.png"));
-    private static final Identifier WORLD_SETTINGS_ICON = getIconFromJson("world_settings_icon", icons, new Identifier("minecraft", "textures/block/furnace_front.png"));
-    private static final Identifier ADVANCED_SETTINGS_ICON = getIconFromJson("advanced_settings_icon", icons, new Identifier("minecraft", "textures/block/enchanting_table_top.png"));
+    private static final Identifier GENERAL_SETTINGS_ICON = getIconFromJson("general_settings_icon", icons, Identifier.of("minecraft", "textures/block/crafting_table_top.png"));
+    private static final Identifier WORLD_SETTINGS_ICON = getIconFromJson("world_settings_icon", icons, Identifier.of("minecraft", "textures/block/furnace_front.png"));
+    private static final Identifier ADVANCED_SETTINGS_ICON = getIconFromJson("advanced_settings_icon", icons, Identifier.of("minecraft", "textures/block/enchanting_table_top.png"));
     public static int numberOfTabs = 3;
 
     public static OptionsTabWidget init(TabUtils utils, TabManager tabManager, CreateWorldScreen target, int navigatorWidth, int tabMenuWidth) {
@@ -33,7 +33,7 @@ public class MenuSettings {
     private static JsonObject getIcons() {
         try {
             Resource resource = MinecraftClient.getInstance().getResourceManager()
-                    .getResourceOrThrow(new Identifier("reimaginedmenus", "textures/misc/tabicons.json"));
+                    .getResourceOrThrow(Identifier.of("reimaginedmenus", "textures/misc/tabicons.json"));
 
             Gson gson = new Gson();
             return gson.fromJson(resource.getReader(), JsonObject.class);
@@ -44,7 +44,7 @@ public class MenuSettings {
     private static Identifier getIconFromJson(String key, JsonObject object, Identifier def) {
         if (object != null) {
             try {
-                return new Identifier(object.get(key).getAsString());
+                return Identifier.of(object.get(key).getAsString());
             } catch (InvalidIdentifierException ignored) {}
         }
         return def;
