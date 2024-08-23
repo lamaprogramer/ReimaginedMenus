@@ -1,5 +1,7 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
+import com.google.common.collect.ImmutableList;
+import net.iamaprogrammer.reimaginedmenus.gui.tabs.BasicTab;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -24,13 +26,13 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
     static final Identifier VERTICAL_SEPARATOR_TEXTURE = Identifier.of("reimaginedmenus","textures/gui/vertical_separator.png");
     private static final Text SELECTION_USAGE_TEXT = Text.translatable("narration.selection.usage");
     private final Identifier DEFAULT_WORLD_IMAGE = Identifier.of("reimaginedmenus", "textures/misc/normal.png");
+
     private final WorldCreator worldCreator;
     private final Text title;
     private final int size;
     private final int listWidth;
     private final int listHeight;
     private final int top;
-    //final OptionsScreen screen;
 
     public OptionsListWidget(MinecraftClient client, WorldCreator worldCreator, int width, int height, int size, Text title) {
         super(client, width, height, height/2, size+10);
@@ -70,7 +72,6 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
             context.drawTexture(this.DEFAULT_WORLD_IMAGE, texturePositionX, texturePositionY, 0.0F, 0.0F, 128, 72, 128, 72);
         }
         context.drawTexture(VERTICAL_SEPARATOR_TEXTURE, this.listWidth, 0, 0.0F, 0.0F, 2, this.listHeight, 2, 32);
-
     }
 
     public void selectTab(int id) {
@@ -79,7 +80,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
     }
 
     protected void renderHeader(DrawContext context, int x, int y) {
-        Text text = Text.empty().append(this.title).formatted(new Formatting[]{Formatting.UNDERLINE, Formatting.BOLD});
+        Text text = Text.empty().append(this.title).formatted(Formatting.UNDERLINE, Formatting.BOLD);
         context.drawText(this.client.textRenderer, text, (x + this.width / 2 - this.client.textRenderer.getWidth(text) / 2), Math.min(this.top + 3, y), 16777215, true);
     }
 
@@ -99,8 +100,17 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         OptionsListWidget.OptionsPackEntry entry = new OptionsPackEntry(client, widget, name, this.listWidth, icon, id, action);
         entry.setId(this.children().size());
         this.children().add(entry);
-        //return entry.getId();
     }
+
+//    public void addAll(MinecraftClient client, OptionsTabWidget navigator, ImmutableList<BasicTab> tabs) {
+//        for (int i = 0; i < tabs.size(); i++) {
+//            BasicTab tab = tabs.get(i);
+//            this.add(client, this, Text.translatable(tab.translationKey), tab.icon, i, (id) -> {
+//                navigator.selectTab(id, true);
+//                this.currentTab = id;
+//            });
+//        }
+//    }
 
     @Override
     public void appendClickableNarrations(NarrationMessageBuilder builder) {
@@ -128,7 +138,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         private final OrderedText optionName;
         private final PressAction pressAction;
         private final Identifier tabIcon;
-        private int id = 0;
+        private int id;
 
         private final int width;
 
@@ -150,7 +160,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
             int i = client.textRenderer.getWidth(text);
 
             if (i > 157) {
-                StringVisitable stringVisitable = StringVisitable.concat(new StringVisitable[]{client.textRenderer.trimToWidth(text, 157 - client.textRenderer.getWidth("...")), StringVisitable.plain("...")});
+                StringVisitable stringVisitable = StringVisitable.concat(client.textRenderer.trimToWidth(text, 157 - client.textRenderer.getWidth("...")), StringVisitable.plain("..."));
                 return Language.getInstance().reorder(stringVisitable);
             } else {
                 return text.asOrderedText();
@@ -165,7 +175,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
             context.drawTexture(this.tabIcon, x+((entryHeight-widget.size)/2), y +((entryHeight-widget.size)/2), 0.0F, 0.0F, widget.size, widget.size, widget.size, widget.size);
             OrderedText orderedText = this.optionName;
 
-            if (((Boolean)this.client.options.getTouchscreen().getValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
+            if ((this.client.options.getTouchscreen().getValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
                 context.fill(x+((entryHeight-widget.size)/2), y+((entryHeight-widget.size)/2), x + widget.size +((entryHeight-widget.size)/2), y + widget.size +((entryHeight-widget.size)/2), -1601138544);
 
             }
@@ -179,18 +189,15 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         }
 
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
-            if (button != 0) {
-                return false;
-            } else {
-                double d = mouseX - (double)this.widget.getRowLeft();
-                double e = mouseY - (double)this.widget.getRowTop(this.widget.children().indexOf(this));
+            if (button == 0) {
+                double d = mouseX - (double) this.widget.getRowLeft();
+                //double e = mouseY - (double) this.widget.getRowTop(this.widget.children().indexOf(this));
                 if (d <= this.width) {
                     this.pressAction.onPress(this.id);
                     return true;
                 }
-
-                return false;
             }
+            return false;
         }
     }
 }

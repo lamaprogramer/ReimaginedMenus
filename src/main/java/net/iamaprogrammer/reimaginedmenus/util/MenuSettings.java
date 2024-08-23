@@ -16,21 +16,7 @@ import net.minecraft.util.InvalidIdentifierException;
 import java.io.IOException;
 
 public class MenuSettings {
-    private static final JsonObject icons = getIcons();
-    private static final Identifier GENERAL_SETTINGS_ICON = getIconFromJson("general_settings_icon", icons, Identifier.of("minecraft", "textures/block/crafting_table_top.png"));
-    private static final Identifier WORLD_SETTINGS_ICON = getIconFromJson("world_settings_icon", icons, Identifier.of("minecraft", "textures/block/furnace_front.png"));
-    private static final Identifier ADVANCED_SETTINGS_ICON = getIconFromJson("advanced_settings_icon", icons, Identifier.of("minecraft", "textures/block/enchanting_table_top.png"));
-    public static int numberOfTabs = 3;
-
-    public static OptionsTabWidget init(TabUtils utils, TabManager tabManager, CreateWorldScreen target, int navigatorWidth, int tabMenuWidth) {
-        GeneralTab generalTab = new GeneralTab(utils, target, "world.create.tab.general", GENERAL_SETTINGS_ICON, navigatorWidth);
-        WorldTab worldTab = new WorldTab(utils, target,  "world.create.tab.world", WORLD_SETTINGS_ICON, navigatorWidth);
-        AdvancedTab advancedTab = new AdvancedTab(utils, target, "world.create.tab.advanced", ADVANCED_SETTINGS_ICON, navigatorWidth);
-
-        return OptionsTabWidget.builder(tabManager, tabMenuWidth, 0).tabs(generalTab, worldTab, advancedTab).build();
-    }
-
-    private static JsonObject getIcons() {
+    public static JsonObject getIcons() {
         try {
             Resource resource = MinecraftClient.getInstance().getResourceManager()
                     .getResourceOrThrow(Identifier.of("reimaginedmenus", "textures/misc/tabicons.json"));
@@ -41,7 +27,7 @@ public class MenuSettings {
         return null;
     }
 
-    private static Identifier getIconFromJson(String key, JsonObject object, Identifier def) {
+    public static Identifier getIconFromJson(String key, JsonObject object, Identifier def) {
         if (object != null) {
             try {
                 return Identifier.of(object.get(key).getAsString());

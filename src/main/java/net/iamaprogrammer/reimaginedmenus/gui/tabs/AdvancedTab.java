@@ -17,18 +17,18 @@ public class AdvancedTab extends BasicTab {
     private static final Text EXPERIMENTS_TEXT = Text.translatable("selectWorld.experiments");
 
     private final CreateWorldScreen target;
-    private final int buttonWidth;
 
-    public AdvancedTab(TabUtils utils, CreateWorldScreen target, String key, Identifier icon, int posX) {
-        super(utils, posX, key, icon, MORE_TAB_TITLE_TEXT);
+    public AdvancedTab(TabUtils utils, CreateWorldScreen target, String key, Identifier icon, int posX, int width) {
+        super(utils, posX, width, key, icon, MORE_TAB_TITLE_TEXT);
+        int buttonWidth = 210;
         this.target = target;
-        this.buttonWidth = (int)((this.posX/1.5) - 20);
 
         GridWidget.Adder adder = this.grid.setRowSpacing(8).createAdder(1);
-        Positioner positioner = adder.copyPositioner().marginLeft(this.posX).marginTop(this.posY);
-        adder.add(ButtonWidget.builder(GAME_RULES_TEXT, button -> this.openGameRulesScreen()).width(this.buttonWidth).build(), positioner);
-        adder.add(ButtonWidget.builder(EXPERIMENTS_TEXT, button -> target.openExperimentsScreen(worldCreator.getGeneratorOptionsHolder().dataConfiguration())).width(this.buttonWidth).build(), positioner);
-        adder.add(ButtonWidget.builder(DATA_PACKS_TEXT, button -> target.openPackScreen(worldCreator.getGeneratorOptionsHolder().dataConfiguration())).width(this.buttonWidth).build(), positioner);
+        Positioner positioner = adder.getMainPositioner().marginLeft((this.width - buttonWidth)/2).marginTop(this.posY);
+
+        adder.add(ButtonWidget.builder(GAME_RULES_TEXT, button -> this.openGameRulesScreen()).width(buttonWidth).build(), positioner);
+        adder.add(ButtonWidget.builder(EXPERIMENTS_TEXT, button -> target.openExperimentsScreen(worldCreator.getGeneratorOptionsHolder().dataConfiguration())).width(buttonWidth).build(), positioner);
+        adder.add(ButtonWidget.builder(DATA_PACKS_TEXT, button -> target.openPackScreen(worldCreator.getGeneratorOptionsHolder().dataConfiguration())).width(buttonWidth).build(), positioner);
     }
 
     private void openGameRulesScreen() {
