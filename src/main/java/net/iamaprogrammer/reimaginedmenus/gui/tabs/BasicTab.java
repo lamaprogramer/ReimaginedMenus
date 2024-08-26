@@ -36,7 +36,6 @@ public abstract class BasicTab extends GridScreenTab {
     @Override
     public void refreshGrid(ScreenRect tabArea) {
         this.grid.refreshPositions();
-        System.out.println(tabArea.getBottom() + " : " + tabArea.getRight());
         SimplePositioningWidget.setPos(this.grid, tabArea, 0.0f, 0.16666667f);
     }
 }

@@ -1,7 +1,5 @@
 package net.iamaprogrammer.reimaginedmenus.gui.widgets;
 
-import com.google.common.collect.ImmutableList;
-import net.iamaprogrammer.reimaginedmenus.gui.tabs.BasicTab;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
@@ -101,16 +99,6 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         entry.setId(this.children().size());
         this.children().add(entry);
     }
-
-//    public void addAll(MinecraftClient client, OptionsTabWidget navigator, ImmutableList<BasicTab> tabs) {
-//        for (int i = 0; i < tabs.size(); i++) {
-//            BasicTab tab = tabs.get(i);
-//            this.add(client, this, Text.translatable(tab.translationKey), tab.icon, i, (id) -> {
-//                navigator.selectTab(id, true);
-//                this.currentTab = id;
-//            });
-//        }
-//    }
 
     @Override
     public void appendClickableNarrations(NarrationMessageBuilder builder) {
