@@ -11,12 +11,12 @@ import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -30,12 +30,14 @@ public abstract class GameRendererMixin {
 
     @Shadow @Final private static Logger LOGGER;
 
+
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;updateWorldIcon()V"))
-    private void injected(GameRenderer instance) {
+    private void reimaginedmenus_UpdateIcon(GameRenderer instance) {
         updateIcon(WorldIconScreen.SELECTED_ICON, WorldIconScreen.SELECTED_ICON != null);
         WorldIconScreen.SELECTED_ICON = null;
     }
 
+    @Unique
     public void updateIcon(String iconPath, boolean isCustom) {
         if (this.hasWorldIcon || !this.client.isInSingleplayer()) {
             return;
@@ -50,7 +52,7 @@ public abstract class GameRendererMixin {
             return;
         }
         integratedServer.getIconFile().ifPresent(path -> {
-            if (Files.isRegularFile(path, new LinkOption[0])) {
+            if (Files.isRegularFile(path)) {
                 this.hasWorldIcon = true;
             } else {
                 imagePathToIcon(iconPath, path, isCustom);
@@ -58,6 +60,7 @@ public abstract class GameRendererMixin {
         });
     }
 
+    @Unique
     private void imagePathToIcon(String path, Path destination, boolean isCustom) {
         try {
             NativeImage nativeImage;
@@ -77,6 +80,7 @@ public abstract class GameRendererMixin {
         }
     }
 
+    @Unique
     private void genImage(NativeImage nativeImage, Path destination) {
         Util.getIoWorkerExecutor().execute(() -> {
             int i = nativeImage.getWidth();
