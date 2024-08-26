@@ -33,7 +33,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
     private final int top;
 
     public OptionsListWidget(MinecraftClient client, WorldCreator worldCreator, int width, int height, int size, Text title) {
-        super(client, width, height, height/2, size+10);
+        super(client, width, height, height/2, height - 10, size+10);
         this.worldCreator = worldCreator;
         this.title = title;
         this.size = size;
@@ -45,8 +45,8 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
         this.setRenderHeader(true, (int)(9.0F * 1.5F));
     }
 
-    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
-        super.renderWidget(context, mouseX, mouseY, delta);
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
+        super.render(context, mouseX, mouseY, delta);
 
         int texturePositionX = (this.listWidth - 128)/2;
         int texturePositionY = ((this.listHeight / 2)- 72)/2;
@@ -87,7 +87,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
     }
 
     protected int getScrollbarPositionX() {
-        return this.getRight() - 6;
+        return this.right - 6;
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
@@ -101,7 +101,7 @@ public class OptionsListWidget extends EntryListWidget<OptionsListWidget.Options
     }
 
     @Override
-    public void appendClickableNarrations(NarrationMessageBuilder builder) {
+    public void appendNarrations(NarrationMessageBuilder builder) {
         OptionsPackEntry entry = this.getHoveredEntry();
         if (entry != null) {
             this.appendNarrations(builder.nextMessage(), entry);

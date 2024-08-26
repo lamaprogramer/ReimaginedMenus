@@ -83,7 +83,7 @@ public class WorldIconScreen extends Screen {
         int POSY = this.height - 48;
 
         this.availableIconsList = this.addDrawableChild(new WorldIconListWidget(this.client, this, 200, (int) (this.height/1.5), Text.translatable("pack.available.title")));
-        this.availableIconsList.setX((this.width - 200)/2);
+        this.availableIconsList.setLeftPos((this.width - 200)/2); // TODO
         this.addSelectableChild(this.availableIconsList);
 
         this.addDrawableChild(ButtonWidget.builder(Text.translatable("world.create.icon.openfolder"), button -> Util.getOperatingSystem().open(this.file.toUri())).dimensions(this.width / 2 - 154, POSY, 150, 20).tooltip(Tooltip.of(FOLDER_INFO)).build());
@@ -161,7 +161,7 @@ public class WorldIconScreen extends Screen {
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
+        this.render(context, mouseX, mouseY, delta); // TODO
         this.availableIconsList.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 8, 0xFFFFFF);
         context.drawCenteredTextWithShadow(this.textRenderer, DROP_INFO, this.width / 2, 20, 0xFFFFFF);
