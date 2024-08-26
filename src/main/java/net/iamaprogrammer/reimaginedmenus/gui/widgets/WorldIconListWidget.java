@@ -104,7 +104,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
         }
 
         private static MultilineText createMultilineText(MinecraftClient client, Text text) {
-            return MultilineText.create(client.textRenderer, (StringVisitable)text, 157, 2);
+            return MultilineText.create(client.textRenderer, text, 157, 2);
         }
 
         @Override
@@ -149,11 +149,11 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
                     RenderSystem.setShaderTexture(0, iconTexture);
                     context.drawTexture(iconTexture, x, y, 0.0f, 0.0f, 32, 32, 32, 32);
                 } catch (Exception e) {
-                    context.drawTexture(new Identifier("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+                    context.drawTexture(Identifier.of("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
                 }
             } else {
                 context.fill(x - 1, y - 1, x + entryWidth - 9, y + entryHeight + 1, -8978432);
-                context.drawTexture(new Identifier("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+                context.drawTexture(Identifier.of("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
             }
 
             // DO NOT REMOVE THIS BLOCK, it stops the icons from eating up your memory.

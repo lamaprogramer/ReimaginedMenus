@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -31,8 +30,9 @@ public abstract class GameRendererMixin {
 
     @Shadow @Final private static Logger LOGGER;
 
+
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;updateWorldIcon()V"))
-    private void injected(GameRenderer instance) {
+    private void reimaginedmenus_UpdateIcon(GameRenderer instance) {
         updateIcon(WorldIconScreen.SELECTED_ICON, WorldIconScreen.SELECTED_ICON != null);
         WorldIconScreen.SELECTED_ICON = null;
     }
@@ -52,7 +52,7 @@ public abstract class GameRendererMixin {
             return;
         }
         integratedServer.getIconFile().ifPresent(path -> {
-            if (Files.isRegularFile(path, new LinkOption[0])) {
+            if (Files.isRegularFile(path)) {
                 this.hasWorldIcon = true;
             } else {
                 imagePathToIcon(iconPath, path, isCustom);

@@ -123,7 +123,7 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     private int getCurrentTabIndex() {
         Tab tab = this.tabManager.getCurrentTab();
         int i = this.tabs.indexOf(tab);
-        return i != -1 ? i : -1;
+        return i;
     }
 
     private @Nullable TabButtonWidget getCurrentTabButton() {
@@ -132,9 +132,7 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-
-    }
+    public void render(DrawContext context, int mouseX, int mouseY, float delta) {}
 
 
     public static class Builder {
@@ -151,6 +149,12 @@ public class OptionsTabWidget extends AbstractParentElement implements Drawable,
 
         public net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder tabs(BasicTab... tabs) {
             Collections.addAll(this.tabs, tabs);
+            return this;
+        }
+
+        public net.iamaprogrammer.reimaginedmenus.gui.widgets.OptionsTabWidget.Builder tabs(ArrayList<BasicTab> tabs) {
+            this.tabs.addAll(tabs);
+            //Collections.addAll(this.tabs, tabs);
             return this;
         }
 
