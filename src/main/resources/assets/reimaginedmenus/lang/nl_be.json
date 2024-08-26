@@ -1,0 +1,15 @@
+{
+  "world.create.settings": "Instellingen",
+  "world.create.tab.general": "Algemeen",
+  "world.create.tab.world": "Wereld",
+  "world.create.tab.advanced": "Geavanceerd",
+  "world.create.icon.filetoolarge": "%s KB Is te groot!! Selecteer een bestand onder 50 KB.",
+  "world.create.icon.title": "Wereldpictogrammen",
+  "world.create.icon.folderinfo": "(Plaats hier je pictogrammen)",
+  "world.create.icon.dropinfo": "Sleep bestanden naar dit venster om pictogrammen toe te voegen.",
+  "world.create.icon.openfolder": "Open Pictogramfolder",
+  "world.create.icon.dropConfirm": "Wil je de volgende pictogrammen aan Minecraft toevoegen?",
+
+  "modmenu.summaryTranslation.reimaginedmenus": "Het 'Nieuwe wereld creëren' menu in een nieuw jasje.",
+  "modmenu.descriptionTranslation.reimaginedmenus": "Reimagined Menus herinterpreteert het ontwerp van de wereldmenu's in de stijl van Bedrock terwijl het de looks van Java behoud!"
+}
