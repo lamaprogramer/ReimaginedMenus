@@ -26,13 +26,13 @@ import java.util.Objects;
 
 
 public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamaprogrammer.reimaginedmenus.gui.widgets.WorldIconListWidget.WorldIconEntry> {
-    static final Identifier RESOURCE_PACKS_TEXTURE = new Identifier("textures/gui/resource_packs.png");
+    static final Identifier RESOURCE_PACKS_TEXTURE = Identifier.of("textures/gui/resource_packs.png");
     private final Text title;
     private final WorldIconScreen screen;
     private final int top = 32;
 
     public WorldIconListWidget(MinecraftClient client, WorldIconScreen screen, int width, int height, Text title) {
-        super(client, width, height, 32, height - 55 + 4, 36);
+        super(client, width, height, 32, 36);
         this.screen = screen;
         this.title = title;
         this.centerListVertically = false;
@@ -52,8 +52,8 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
     }
 
     @Override
-    protected int getScrollbarPositionX() {
-        return this.right - 6;
+    protected int getScrollbarX() {
+        return this.getRight() - 6;
     }
 
     @Override
@@ -104,7 +104,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
         }
 
         private static MultilineText createMultilineText(MinecraftClient client, Text text) {
-            return MultilineText.create(client.textRenderer, text, 157, 2); // TODO return here
+            return MultilineText.create(client.textRenderer, 157, 2, text); // TODO return here
         }
 
         @Override
@@ -166,6 +166,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
                 multilineText = createMultilineText(client, Text.translatable("world.create.icon.filetoolarge", String.format("%.3f", this.fileSize)));
             }
             if (this.isSelectable() && (this.client.options.getTouchscreen().getValue().booleanValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
+                //RenderSystem.setShaderTexture(0, RESOURCE_PACKS_TEXTURE);
                 context.fill(x, y, x + 32, y + 32, -1601138544);
             }
             context.drawText(this.client.textRenderer, orderedText, (x + 32 + 2), (y + 1), 0xFFFFFF, true);

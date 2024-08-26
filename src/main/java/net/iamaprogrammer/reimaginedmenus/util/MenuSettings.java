@@ -30,7 +30,7 @@ public class MenuSettings {
     public static Identifier getIconFromJson(String key, JsonObject object, Identifier def) {
         if (object != null) {
             try {
-                return new Identifier(object.get(key).getAsString());
+                return Identifier.of(object.get(key).getAsString());
             } catch (InvalidIdentifierException ignored) {}
         }
         return def;

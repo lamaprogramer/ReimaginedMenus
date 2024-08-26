@@ -47,7 +47,7 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	@Shadow protected abstract void createLevel();
 	@Shadow public abstract void onCloseScreen();
 	@Shadow protected abstract <T extends Element & Drawable & Selectable> T addDrawableChild(T drawableElement);
-	@Shadow public abstract void renderBackgroundTexture(DrawContext context);
+	@Shadow protected abstract void renderDarkening(DrawContext context);
 
 	@Unique
 	private final CreateWorldScreen target =  ((CreateWorldScreen)(Object)this);
@@ -107,6 +107,9 @@ public abstract class CreateWorldScreenMixin extends Screen {
 	private int reimaginedmenus_ModifyDivider(int x) {
 		return this.screenManager.getNavigatorWidth()+1;
 	}
+
+	@Redirect(method = "renderDarkening", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/world/CreateWorldScreen;renderDarkening(Lnet/minecraft/client/gui/DrawContext;IIII)V"))
+	private void reimaginedmenus_RemoveDarkening(CreateWorldScreen instance, DrawContext drawContext, int x, int y, int width, int height) {}
 
 	@Override
 	public void resize(MinecraftClient client, int width, int height) {
