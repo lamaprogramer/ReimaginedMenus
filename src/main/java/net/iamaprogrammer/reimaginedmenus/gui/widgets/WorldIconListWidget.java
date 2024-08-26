@@ -29,6 +29,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
     static final Identifier RESOURCE_PACKS_TEXTURE = new Identifier("textures/gui/resource_packs.png");
     private final Text title;
     private final WorldIconScreen screen;
+    private final int top = 32;
 
     public WorldIconListWidget(MinecraftClient client, WorldIconScreen screen, int width, int height, Text title) {
         super(client, width, height, 32, height - 55 + 4, 36);
@@ -103,7 +104,7 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
         }
 
         private static MultilineText createMultilineText(MinecraftClient client, Text text) {
-            return MultilineText.create(client.textRenderer, (StringVisitable)text, 157, 2);
+            return MultilineText.create(client.textRenderer, text, 157, 2); // TODO return here
         }
 
         @Override
@@ -139,20 +140,20 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
             NativeImageBackedTexture texture = null;
             if (!this.isToLarge) {
                 try {
-                    File f = new File(fullPath);
+                    File f = new File(this.fullPath);
                     inputStream = new ByteArrayInputStream(Files.readAllBytes(f.toPath()));
                     inputStream.close();
                     texture = new NativeImageBackedTexture(NativeImage.read(inputStream));
-                    Identifier iconTexture = client.getTextureManager().registerDynamicTexture("worldicontexture", texture);
+                    Identifier iconTexture = this.client.getTextureManager().registerDynamicTexture("worldicontexture", texture);
 
                     RenderSystem.setShaderTexture(0, iconTexture);
                     context.drawTexture(iconTexture, x, y, 0.0f, 0.0f, 32, 32, 32, 32);
                 } catch (Exception e) {
-                    context.drawTexture(new Identifier("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+                    context.drawTexture(Identifier.of("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
                 }
             } else {
                 context.fill(x - 1, y - 1, x + entryWidth - 9, y + entryHeight + 1, -8978432);
-                context.drawTexture(new Identifier("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
+                context.drawTexture(Identifier.of("minecraft", "textures/misc/unknown_pack.png"), x, y, 0.0f, 0.0f, 32, 32, 32, 32);
             }
 
             // DO NOT REMOVE THIS BLOCK, it stops the icons from eating up your memory.
@@ -165,7 +166,6 @@ public class WorldIconListWidget extends AlwaysSelectedEntryListWidget<net.iamap
                 multilineText = createMultilineText(client, Text.translatable("world.create.icon.filetoolarge", String.format("%.3f", this.fileSize)));
             }
             if (this.isSelectable() && (this.client.options.getTouchscreen().getValue().booleanValue() || hovered || this.widget.getSelectedOrNull() == this && this.widget.isFocused())) {
-                RenderSystem.setShaderTexture(0, RESOURCE_PACKS_TEXTURE);
                 context.fill(x, y, x + 32, y + 32, -1601138544);
             }
             context.drawText(this.client.textRenderer, orderedText, (x + 32 + 2), (y + 1), 0xFFFFFF, true);

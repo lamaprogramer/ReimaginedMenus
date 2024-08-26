@@ -28,7 +28,7 @@ public abstract class WorldIconMixin {
 
 
     @Inject(method = "load", at = @At("HEAD"), cancellable = true)
-    public void removeIconLimits(NativeImage image, CallbackInfo ci) {
+    private void removeIconLimits(NativeImage image, CallbackInfo ci) {
         try {
             this.assertOpen();
             if (this.texture == null) {
